@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import portrait from '../assets/portrait.png';
 import '../styles/global.css';
 
 const siteTitle = 'Hunghsuan 帶哥 — 三角洲行動遊戲運營與內容創作者';
@@ -142,10 +144,12 @@ const featuredVideos = [
 				const root = document.documentElement;
 				const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
 				const primaryLanguage = navigator.languages?.[0] || navigator.language || 'en';
-				const language = primaryLanguage.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+				let language = primaryLanguage.toLowerCase().startsWith('zh') ? 'zh' : 'en';
 				let preference = 'auto';
 
 				try {
+					const savedLanguage = localStorage.getItem('language-preference');
+					if (savedLanguage === 'zh' || savedLanguage === 'en') language = savedLanguage;
 					preference = localStorage.getItem('theme-preference') || 'auto';
 				} catch {}
 
@@ -260,11 +264,16 @@ const featuredVideos = [
 					<div class="portrait-wrap">
 						<div class="portrait-index" aria-hidden="true">/ 01</div>
 						<div class="portrait-frame">
-							<img
-								src="/1.png"
+							<Image
+								src={portrait}
 								alt="Hunghsuan 的個人照片"
-								width="1254"
-								height="1254"
+								width={470}
+								height={470}
+								layout="constrained"
+								format="webp"
+								quality="max"
+								loading="eager"
+								decoding="async"
 								fetchpriority="high"
 							/>
 							<div class="portrait-caption">
@@ -544,6 +553,11 @@ const featuredVideos = [
 				const nextLanguage = root.dataset.language === 'zh' ? 'en' : 'zh';
 				root.dataset.language = nextLanguage;
 				root.lang = nextLanguage === 'zh' ? 'zh-Hant' : 'en';
+
+				try {
+					localStorage.setItem('language-preference', nextLanguage);
+				} catch {}
+
 				syncLanguageToggle();
 			});
 
