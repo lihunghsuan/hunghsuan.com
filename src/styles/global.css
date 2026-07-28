@@ -4,6 +4,7 @@
 	--paper-deep: #e3ded0;
 	--ink: #111713;
 	--forest: #18372d;
+	--accent-text: #18372d;
 	--forest-deep: #10281f;
 	--acid: #c8ee68;
 	--line: rgba(17, 23, 19, 0.2);
@@ -26,6 +27,7 @@ html[data-theme="dark"] {
 	--paper-deep: #1a2721;
 	--ink: #f1eee5;
 	--forest: #21483a;
+	--accent-text: #91b8a8;
 	--forest-deep: #080d0a;
 	--acid: #d2f47d;
 	--line: rgba(241, 238, 229, 0.18);
@@ -242,8 +244,8 @@ html[data-language="en"] [data-lang="en"] {
 	align-items: center;
 	gap: 14px;
 	margin: 0 0 32px;
-	color: var(--forest);
-	font-size: 0.67rem;
+	color: var(--accent-text);
+	font-size: 0.7rem;
 	font-weight: 800;
 	letter-spacing: 0.22em;
 }
@@ -251,7 +253,7 @@ html[data-language="en"] [data-lang="en"] {
 .eyebrow-line {
 	width: 42px;
 	height: 2px;
-	background: var(--forest);
+	background: var(--accent-text);
 }
 
 .hero h1 {
@@ -328,8 +330,8 @@ html[data-language="en"] [data-lang="en"] {
 
 .youtube-action {
 	padding: 8px 0;
-	color: var(--forest);
-	font-size: 0.64rem;
+	color: var(--accent-text);
+	font-size: 0.68rem;
 	font-weight: 850;
 	letter-spacing: 0.14em;
 	text-decoration: none;
@@ -794,8 +796,8 @@ html[data-language="en"] [data-lang="en"] {
 
 .contact-kicker {
 	margin: 0 0 28px;
-	color: var(--forest);
-	font-size: 0.62rem;
+	color: var(--accent-text);
+	font-size: 0.68rem;
 	font-weight: 800;
 	letter-spacing: 0.2em;
 }
@@ -952,12 +954,33 @@ html[data-language="en"] [data-lang="en"] {
 
 @media (max-width: 640px) {
 	.site-header {
-		min-height: 72px;
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 10px 14px;
+		min-height: auto;
+		padding-top: 12px;
+		padding-bottom: 10px;
 	}
 
-	.brand > span:last-child,
-	.desktop-nav {
+	.brand > span:last-child {
 		display: none;
+	}
+
+	.desktop-nav {
+		grid-column: 1 / -1;
+		grid-row: 2;
+		justify-content: space-between;
+		width: 100%;
+		padding-top: 10px;
+		border-top: 1px solid var(--line);
+	}
+
+	.desktop-nav a {
+		font-size: 0.64rem;
+	}
+
+	.header-controls {
+		justify-self: end;
 	}
 
 	.theme-control button {
