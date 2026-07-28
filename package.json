@@ -9,10 +9,15 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "deploy": "npm run build && wrangler deploy",
+    "preview:cloudflare": "npm run build && wrangler dev",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.1.4"
+  },
+  "devDependencies": {
+    "wrangler": "^4.114.0"
   }
 }
