@@ -1,567 +1,68 @@
 ---
-import { Image } from 'astro:assets';
-import portrait from '../assets/portrait.png';
-import '../styles/global.css';
-
-const siteTitle = 'Hunghsuan 帶哥 — 三角洲行動遊戲運營與內容創作者';
-const siteDescription =
-	'Hunghsuan（帶哥）的個人網站——三角洲行動遊戲運營、玩家與內容創作者，分享實戰、攻略與遊戲內容。';
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const socialImageURL = new URL('/og.png', Astro.site);
-const structuredData = {
-	'@context': 'https://schema.org',
-	'@type': 'Person',
-	name: 'Hunghsuan',
-	alternateName: '帶哥',
-	url: 'https://hunghsuan.com',
-	image: 'https://hunghsuan.com/1.png',
-	jobTitle: 'Delta Force Game Operations',
-	email: 'mailto:lihunghsuan@gmail.com',
-	sameAs: [
-		'https://www.youtube.com/@lihunghsuan',
-		'https://space.bilibili.com/1973193961',
-	],
-};
-
-const contentCards = [
-	{
-		index: '01',
-		eyebrowZh: '遊戲',
-		eyebrowEn: 'GAMING',
-		titleZh: '戰術與遊戲紀錄',
-		titleEn: 'Tactics & gameplay',
-		descriptionZh: '從遊戲運營與玩家的雙重視角，記錄三角洲行動的內容、系統與實戰體驗。',
-		descriptionEn: 'Delta Force content, systems, and gameplay through both operator and player lenses.',
-		statusZh: '三角洲行動遊戲運營',
-		statusEn: 'PROFESSIONAL FOCUS',
-		links: [],
-	},
-	{
-		index: '02',
-		eyebrowZh: '影片',
-		eyebrowEn: 'VIDEO',
-		titleZh: '精選內容',
-		titleEn: 'Featured stories',
-		descriptionZh: '在 YouTube 分享影片、短片與遊戲內容，記錄每一段有趣的過程。',
-		descriptionEn: 'Videos, shorts, and gaming stories—capturing every worthwhile moment.',
-		statusZh: '觀看我的頻道',
-		statusEn: 'WATCH MY CHANNELS',
-		links: [
-			{ label: 'YOUTUBE', url: 'https://www.youtube.com/@lihunghsuan' },
-			{ label: 'BILIBILI', url: 'https://space.bilibili.com/1973193961' },
-		],
-	},
-	{
-		index: '03',
-		eyebrowZh: '直播',
-		eyebrowEn: 'LIVE',
-		titleZh: '和我一起上線',
-		titleEn: 'Catch me live',
-		descriptionZh: '直播時間、即時狀態與平台入口將會更新在這裡。',
-		descriptionEn: 'Streaming schedules, live status, and platform links will live here.',
-		statusZh: '連結準備中',
-		statusEn: 'LINKS SOON',
-		links: [],
-	},
-];
-
-const featuredVideos = [
-	{
-		titleZh: '新爆破模式太瘋狂了：5K 殘局逆轉',
-		titleEn: 'The New Delta Force Bomb Mode Is CRAZY… 5K Clutch!',
-		categoryZh: '實戰精華',
-		categoryEn: 'GAMEPLAY',
-		duration: '01:39',
-		url: 'https://www.youtube.com/watch?v=Lhxi17-MceA',
-		thumbnail: 'https://i.ytimg.com/vi/Lhxi17-MceA/hqdefault.jpg',
-	},
-	{
-		titleZh: '阿薩拉的命運在你手中：S10 結局',
-		titleEn: 'The Fate of Ahsarah Is in Your Hands | Delta Force S10 Ending',
-		categoryZh: '賽季內容',
-		categoryEn: 'SEASON STORY',
-		duration: '08:53',
-		url: 'https://www.youtube.com/watch?v=MVzrgeLg_os',
-		thumbnail: 'https://i.ytimg.com/vi/MVzrgeLg_os/hqdefault.jpg',
-	},
-	{
-		titleZh: '新 Boss HUDSON 速通攻略',
-		titleEn: 'New Boss HUDSON Insta-Kills?! How to Beat Him FAST',
-		categoryZh: '攻略解析',
-		categoryEn: 'GUIDE',
-		duration: '05:05',
-		url: 'https://www.youtube.com/watch?v=_z0LAKyxI84',
-		thumbnail: 'https://i.ytimg.com/vi/_z0LAKyxI84/hqdefault.jpg',
-	},
-	{
-		titleZh: '一支影片講清楚三角洲行動手遊設定',
-		titleEn: 'Delta Force Mobile Settings — A Complete Guide',
-		categoryZh: '設定教學',
-		categoryEn: 'TUTORIAL',
-		duration: '15:21',
-		url: 'https://www.youtube.com/watch?v=bBjU7fhpZE8',
-		thumbnail: 'https://i.ytimg.com/vi/bBjU7fhpZE8/hqdefault.jpg',
-	},
-];
+const chineseURL = new URL('/zh/', Astro.site);
+const englishURL = new URL('/en/', Astro.site);
 ---
 
 <!doctype html>
-<html lang="zh-Hant" data-language="zh">
+<html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/png" href="/favicon.png" />
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-		<link rel="canonical" href={canonicalURL} />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content={siteDescription} />
-		<meta name="author" content="Hunghsuan" />
-		<meta name="robots" content="index, follow, max-image-preview:large" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="theme-color" content="#f1eee5" media="(prefers-color-scheme: light)" />
-		<meta name="theme-color" content="#101713" media="(prefers-color-scheme: dark)" />
-
-		<meta property="og:type" content="website" />
-		<meta property="og:site_name" content="Hunghsuan" />
-		<meta property="og:title" content={siteTitle} />
-		<meta property="og:description" content={siteDescription} />
-		<meta property="og:url" content={canonicalURL} />
-		<meta property="og:image" content={socialImageURL} />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
-		<meta property="og:image:alt" content="Hunghsuan — Delta Force Operations and Content Creator" />
-		<meta property="og:locale" content="zh_TW" />
-		<meta property="og:locale:alternate" content="en_US" />
-
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={siteTitle} />
-		<meta name="twitter:description" content={siteDescription} />
-		<meta name="twitter:image" content={socialImageURL} />
-
-		<title>{siteTitle}</title>
-		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+		<meta name="robots" content="noindex, follow" />
+		<link rel="alternate" hreflang="zh-Hant" href={chineseURL} />
+		<link rel="alternate" hreflang="en" href={englishURL} />
+		<link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site)} />
+		<title>Hunghsuan — Choose your language</title>
 		<script is:inline>
 			(() => {
-				const root = document.documentElement;
-				const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
-				const primaryLanguage = navigator.languages?.[0] || navigator.language || 'en';
-				let language = primaryLanguage.toLowerCase().startsWith('zh') ? 'zh' : 'en';
-				let preference = 'auto';
+				const systemLanguage = navigator.languages?.[0] || navigator.language || 'en';
+				let language = systemLanguage.toLowerCase().startsWith('zh') ? 'zh' : 'en';
 
 				try {
 					const savedLanguage = localStorage.getItem('language-preference');
 					if (savedLanguage === 'zh' || savedLanguage === 'en') language = savedLanguage;
-					preference = localStorage.getItem('theme-preference') || 'auto';
 				} catch {}
 
-				root.dataset.language = language;
-				root.lang = language === 'zh' ? 'zh-Hant' : 'en';
-				root.dataset.themePreference = preference;
-				root.dataset.theme =
-					preference === 'auto' ? (systemTheme.matches ? 'dark' : 'light') : preference;
+				const target = language === 'zh' ? '/zh/' : '/en/';
+				window.location.replace(`${target}${window.location.search}${window.location.hash}`);
 			})();
 		</script>
+		<style>
+			:root {
+				color-scheme: light dark;
+				font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+			}
+
+			body {
+				display: grid;
+				min-height: 100vh;
+				margin: 0;
+				place-items: center;
+				background: #101713;
+				color: #f1eee5;
+			}
+
+			main {
+				padding: 32px;
+				text-align: center;
+			}
+
+			a {
+				display: inline-block;
+				margin: 8px;
+				padding: 12px 18px;
+				border: 1px solid currentColor;
+				color: inherit;
+				text-decoration: none;
+			}
+		</style>
 	</head>
 	<body>
-		<div class="page-shell">
-			<header class="site-header">
-				<a class="brand" href="#top" aria-label="Hunghsuan 首頁">
-					<span class="brand-mark" aria-hidden="true">H</span>
-					<span>HUNGHSUAN</span>
-				</a>
-
-				<nav class="desktop-nav" aria-label="主要導覽">
-					<a href="#about">
-						<span data-lang="zh">關於</span>
-						<span data-lang="en">ABOUT</span>
-					</a>
-					<a href="#content">
-						<span data-lang="zh">內容</span>
-						<span data-lang="en">CONTENT</span>
-					</a>
-					<a href="#contact">
-						<span data-lang="zh">聯絡</span>
-						<span data-lang="en">CONTACT</span>
-					</a>
-				</nav>
-
-				<div class="header-controls">
-					<div class="theme-control" role="group" aria-label="外觀主題 Theme">
-						<button type="button" data-theme-choice="auto" aria-label="跟隨系統主題">
-							<span data-lang="zh">自動</span>
-							<span data-lang="en">AUTO</span>
-						</button>
-						<button type="button" data-theme-choice="light" aria-label="使用淺色主題">
-							<span aria-hidden="true">☼</span>
-						</button>
-						<button type="button" data-theme-choice="dark" aria-label="使用深色主題">
-							<span aria-hidden="true">◐</span>
-						</button>
-					</div>
-					<button class="language-toggle" type="button" data-language-toggle aria-label="Switch to English">
-						<span data-toggle-label>EN</span>
-						<span class="toggle-dot" aria-hidden="true"></span>
-					</button>
-				</div>
-			</header>
-
-			<main id="top">
-				<section class="hero" aria-labelledby="hero-title">
-					<div class="hero-copy">
-						<p class="eyebrow">
-							<span class="eyebrow-line" aria-hidden="true"></span>
-							<span data-lang="zh">帶哥・三角洲行動遊戲運營・內容創作者</span>
-							<span data-lang="en">DELTA FORCE OPERATIONS · PLAYER · CREATOR</span>
-						</p>
-
-						<h1 id="hero-title">
-							<span>HUNG</span>
-							<span class="outline-text">HSUAN</span>
-						</h1>
-
-						<div class="hero-intro">
-							<p data-lang="zh">
-								嗨，我是 Hunghsuan，也可以叫我帶哥。<br />
-								我從事《三角洲行動》遊戲運營，也把實戰、攻略與想法整理成內容。
-							</p>
-							<p data-lang="en">
-								Hi, I’m Hunghsuan—also known as Dai Ge.<br />
-								I work in Delta Force game operations and turn gameplay, guides, and ideas into stories.
-							</p>
-						</div>
-
-						<div class="hero-actions">
-							<a class="primary-action" href="#content">
-								<span data-lang="zh">探索內容</span>
-								<span data-lang="en">EXPLORE MY WORK</span>
-								<span aria-hidden="true">↘</span>
-							</a>
-							<a class="text-action" href="#about">
-								<span data-lang="zh">更多關於我</span>
-								<span data-lang="en">MORE ABOUT ME</span>
-								<span aria-hidden="true">→</span>
-							</a>
-							<a
-								class="youtube-action"
-								href="https://www.youtube.com/@lihunghsuan"
-								target="_blank"
-								rel="noreferrer"
-								aria-label="Hunghsuan YouTube 頻道（另開新視窗）"
-							>
-								YOUTUBE ↗
-							</a>
-							<a
-								class="youtube-action"
-								href="https://space.bilibili.com/1973193961"
-								target="_blank"
-								rel="noreferrer"
-								aria-label="帶哥 Bilibili 主頁（另開新視窗）"
-							>
-								BILIBILI ↗
-							</a>
-						</div>
-					</div>
-
-					<div class="portrait-wrap">
-						<div class="portrait-index" aria-hidden="true">/ 01</div>
-						<div class="portrait-frame">
-							<Image
-								src={portrait}
-								alt="Hunghsuan 的個人照片"
-								width={470}
-								height={470}
-								layout="constrained"
-								format="webp"
-								quality="max"
-								loading="eager"
-								decoding="async"
-								fetchpriority="high"
-							/>
-							<div class="portrait-caption">
-								<span>HUNGHSUAN</span>
-								<span>SHANGHAI · 2026</span>
-							</div>
-						</div>
-						<p class="vertical-note" aria-hidden="true">PERSONAL ARCHIVE — 2026</p>
-					</div>
-
-					<div class="scroll-cue" aria-hidden="true">
-						<span>SCROLL</span>
-						<span class="scroll-line"></span>
-					</div>
-				</section>
-
-				<section class="about section-block" id="about" aria-labelledby="about-title">
-					<div class="section-label">
-						<span>01</span>
-						<span data-lang="zh">關於我</span>
-						<span data-lang="en">ABOUT</span>
-					</div>
-
-					<div class="about-content">
-						<h2 id="about-title">
-							<span data-lang="zh">保持好奇，<br />持續創作。</span>
-							<span data-lang="en">STAY CURIOUS.<br />KEEP CREATING.</span>
-						</h2>
-						<div class="about-copy">
-							<p data-lang="zh">
-								我專注於《三角洲行動》遊戲運營，同時也是玩家與內容創作者。
-								這裡收藏我的遊戲理解、實戰經歷、攻略解析與影像創作。
-							</p>
-							<p data-lang="en">
-								I work in Delta Force game operations, while creating from a player’s
-								perspective. This is my base for game insights, field experience, guides, and video.
-							</p>
-							<ul class="interest-list" aria-label="Interests">
-								<li>DELTA FORCE</li>
-								<li>OPERATIONS</li>
-								<li>VIDEO</li>
-								<li>GAMEPLAY</li>
-							</ul>
-						</div>
-					</div>
-				</section>
-
-				<section class="content section-block" id="content" aria-labelledby="content-title">
-					<div class="section-heading">
-						<div class="section-label light">
-							<span>02</span>
-							<span data-lang="zh">正在進行</span>
-							<span data-lang="en">IN PROGRESS</span>
-						</div>
-						<h2 id="content-title">
-							<span data-lang="zh">我的內容</span>
-							<span data-lang="en">WHAT I MAKE</span>
-						</h2>
-					</div>
-
-					<div class="content-grid">
-						{
-							contentCards.map((card) => (
-								<article class="content-card">
-									<div class="card-topline">
-										<span>{card.index}</span>
-										<span data-lang="zh">{card.eyebrowZh}</span>
-										<span data-lang="en">{card.eyebrowEn}</span>
-									</div>
-									<h3>
-										<span data-lang="zh">{card.titleZh}</span>
-										<span data-lang="en">{card.titleEn}</span>
-									</h3>
-									<p>
-										<span data-lang="zh">{card.descriptionZh}</span>
-										<span data-lang="en">{card.descriptionEn}</span>
-									</p>
-									{
-										card.links.length > 0 ? (
-											<div class="card-channel-area">
-												<div class="card-status">
-													<span class="status-dot" aria-hidden="true" />
-													<span data-lang="zh">{card.statusZh}</span>
-													<span data-lang="en">{card.statusEn}</span>
-												</div>
-												<div class="card-links">
-													{card.links.map((link) => (
-														<a
-															class="card-link"
-															href={link.url}
-															target="_blank"
-															rel="noreferrer"
-														>
-															{link.label} ↗
-														</a>
-													))}
-												</div>
-											</div>
-										) : (
-											<div class="card-status">
-												<span class="status-dot" aria-hidden="true" />
-												<span data-lang="zh">{card.statusZh}</span>
-												<span data-lang="en">{card.statusEn}</span>
-											</div>
-										)
-									}
-								</article>
-							))
-						}
-					</div>
-
-					<div class="featured-heading">
-						<div>
-							<p>
-								<span data-lang="zh">頻道精選</span>
-								<span data-lang="en">FEATURED FROM THE CHANNEL</span>
-							</p>
-							<h3>
-								<span data-lang="zh">精選影片</span>
-								<span data-lang="en">SELECTED VIDEOS</span>
-							</h3>
-						</div>
-						<a
-							href="https://www.youtube.com/@lihunghsuan"
-							target="_blank"
-							rel="noreferrer"
-						>
-							<span data-lang="zh">查看全部影片</span>
-							<span data-lang="en">VIEW ALL VIDEOS</span>
-							<span aria-hidden="true">↗</span>
-						</a>
-					</div>
-
-					<div class="video-grid">
-						{
-							featuredVideos.map((video, index) => (
-								<a
-									class="video-card"
-									href={video.url}
-									target="_blank"
-									rel="noreferrer"
-									aria-label={`${video.titleZh}（在 YouTube 觀看）`}
-								>
-									<div class="video-thumbnail">
-										<img
-											src={video.thumbnail}
-											alt=""
-											width="480"
-											height="360"
-											loading="lazy"
-										/>
-										<span class="video-number">{String(index + 1).padStart(2, '0')}</span>
-										<span class="video-duration">{video.duration}</span>
-										<span class="video-play" aria-hidden="true">▶</span>
-									</div>
-									<div class="video-meta">
-										<span data-lang="zh">{video.categoryZh}</span>
-										<span data-lang="en">{video.categoryEn}</span>
-										<span>YOUTUBE</span>
-									</div>
-									<h4>
-										<span data-lang="zh">{video.titleZh}</span>
-										<span data-lang="en">{video.titleEn}</span>
-									</h4>
-								</a>
-							))
-						}
-					</div>
-				</section>
-
-				<section class="contact section-block" id="contact" aria-labelledby="contact-title">
-					<div class="section-label">
-						<span>03</span>
-						<span data-lang="zh">保持聯絡</span>
-						<span data-lang="en">CONTACT</span>
-					</div>
-					<div class="contact-content">
-						<p class="contact-kicker">
-							<span data-lang="zh">下一個故事，從這裡開始。</span>
-							<span data-lang="en">THE NEXT STORY STARTS HERE.</span>
-						</p>
-						<h2 id="contact-title">
-							<span data-lang="zh">一起聊聊。</span>
-							<span data-lang="en">LET’S TALK.</span>
-						</h2>
-						<p class="contact-note">
-							<span data-lang="zh">工作交流或合作邀請，歡迎來信；也可以從頻道認識我的內容。</span>
-							<span data-lang="en">For professional conversations or collaborations, send me an email or explore my channels.</span>
-						</p>
-						<div class="contact-socials">
-							<a class="contact-channel email" href="mailto:lihunghsuan@gmail.com">
-								<span>EMAIL</span>
-								<span aria-hidden="true">↗</span>
-							</a>
-							<a
-								class="contact-channel secondary"
-								href="https://www.youtube.com/@lihunghsuan"
-								target="_blank"
-								rel="noreferrer"
-							>
-								<span>YOUTUBE</span>
-								<span aria-hidden="true">↗</span>
-							</a>
-							<a
-								class="contact-channel secondary"
-								href="https://space.bilibili.com/1973193961"
-								target="_blank"
-								rel="noreferrer"
-							>
-								<span>BILIBILI</span>
-								<span aria-hidden="true">↗</span>
-							</a>
-						</div>
-						<a class="email-address" href="mailto:lihunghsuan@gmail.com">
-							lihunghsuan@gmail.com
-						</a>
-					</div>
-				</section>
-			</main>
-
-			<footer class="site-footer">
-				<span>© 2026 HUNGHSUAN</span>
-				<span data-lang="zh">以 Astro 製作</span>
-				<span data-lang="en">BUILT WITH ASTRO</span>
-				<a href="#top" aria-label="回到頁首">↑ TOP</a>
-			</footer>
-		</div>
-
-		<script is:inline>
-			const root = document.documentElement;
-			const toggle = document.querySelector('[data-language-toggle]');
-			const toggleLabel = document.querySelector('[data-toggle-label]');
-			const themeButtons = document.querySelectorAll('[data-theme-choice]');
-			const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-			const applyTheme = (preference) => {
-				const theme =
-					preference === 'auto' ? (systemTheme.matches ? 'dark' : 'light') : preference;
-				root.dataset.themePreference = preference;
-				root.dataset.theme = theme;
-
-				themeButtons.forEach((button) => {
-					button.setAttribute(
-						'aria-pressed',
-						String(button.dataset.themeChoice === preference),
-					);
-				});
-			};
-
-			themeButtons.forEach((button) => {
-				button.addEventListener('click', () => {
-					const preference = button.dataset.themeChoice;
-					applyTheme(preference);
-
-					try {
-						localStorage.setItem('theme-preference', preference);
-					} catch {}
-				});
-			});
-
-			systemTheme.addEventListener('change', () => {
-				if (root.dataset.themePreference === 'auto') applyTheme('auto');
-			});
-
-			applyTheme(root.dataset.themePreference || 'auto');
-
-			const syncLanguageToggle = () => {
-				const isChinese = root.dataset.language === 'zh';
-				toggleLabel.textContent = isChinese ? 'EN' : '中';
-				toggle.setAttribute(
-					'aria-label',
-					isChinese ? 'Switch to English' : '切換至繁體中文',
-				);
-			};
-
-			toggle?.addEventListener('click', () => {
-				const nextLanguage = root.dataset.language === 'zh' ? 'en' : 'zh';
-				root.dataset.language = nextLanguage;
-				root.lang = nextLanguage === 'zh' ? 'zh-Hant' : 'en';
-
-				try {
-					localStorage.setItem('language-preference', nextLanguage);
-				} catch {}
-
-				syncLanguageToggle();
-			});
-
-			syncLanguageToggle();
-		</script>
+		<main>
+			<h1>Hunghsuan</h1>
+			<p>選擇語言 · Choose your language</p>
+			<a href="/zh/">繁體中文</a>
+			<a href="/en/">English</a>
+		</main>
 	</body>
 </html>

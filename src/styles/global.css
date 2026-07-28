@@ -74,18 +74,6 @@ img {
 	max-width: 100%;
 }
 
-[data-lang="en"] {
-	display: none;
-}
-
-html[data-language="en"] [data-lang="zh"] {
-	display: none;
-}
-
-html[data-language="en"] [data-lang="en"] {
-	display: inline;
-}
-
 .page-shell {
 	width: min(100%, 1600px);
 	margin: 0 auto;
@@ -171,6 +159,7 @@ html[data-language="en"] [data-lang="en"] {
 	font-size: 0.67rem;
 	font-weight: 800;
 	letter-spacing: 0.12em;
+	text-decoration: none;
 	cursor: pointer;
 }
 
