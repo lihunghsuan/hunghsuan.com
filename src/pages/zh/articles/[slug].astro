@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import ArticlePage from '../../../components/ArticlePage.astro';
+
+export async function getStaticPaths() {
+	const articles = await getCollection(
+		'articles',
+		({ data }) => data.lang === 'zh' && (import.meta.env.DEV || !data.draft),
+	);
+
+	return articles.map((entry) => ({
+		params: { slug: entry.data.articleSlug },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+---
+
+<ArticlePage entry={entry} />

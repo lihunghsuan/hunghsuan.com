@@ -1,0 +1,214 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import ArticleLayout from '../layouts/ArticleLayout.astro';
+
+interface Props {
+	entry: CollectionEntry<'articles'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { data } = entry;
+const isZh = data.lang === 'zh';
+const t = (zh: string, en: string) => (isZh ? zh : en);
+const includeDrafts = import.meta.env.DEV;
+const allArticles = await getCollection(
+	'articles',
+	({ data: articleData }) => includeDrafts || !articleData.draft,
+);
+const translation = allArticles.find(
+	(article) =>
+		article.data.translationKey === data.translationKey && article.data.lang !== data.lang,
+);
+const translationPath = translation
+	? `/${translation.data.lang}/articles/${translation.data.articleSlug}/`
+	: undefined;
+const canonicalPath = `/${data.lang}/articles/${data.articleSlug}/`;
+const dateFormatter = new Intl.DateTimeFormat(isZh ? 'zh-TW' : 'en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+---
+
+<ArticleLayout
+	lang={data.lang}
+	title={data.title}
+	description={data.description}
+	canonicalPath={canonicalPath}
+	translationPath={translationPath}
+	pageType="article"
+	publishedAt={data.publishedAt}
+	updatedAt={data.updatedAt}
+	draft={data.draft}
+>
+	<main class="article-main">
+		<article>
+			<header class="article-header">
+				<a class="article-back" href={`/${data.lang}/articles/`} data-reveal="left">
+					← {t('所有文章', 'ALL ARTICLES')}
+				</a>
+				<div class="article-meta" data-reveal>
+					<span>{data.category}</span>
+					<time datetime={data.publishedAt.toISOString()}>
+						{dateFormatter.format(data.publishedAt)}
+					</time>
+					{data.draft && <span class="draft-badge">{t('開發草稿', 'DEVELOPMENT DRAFT')}</span>}
+				</div>
+				<h1 data-reveal style="--reveal-delay: 70ms;">{data.title}</h1>
+				<p class="article-description" data-reveal style="--reveal-delay: 120ms;">
+					{data.description}
+				</p>
+				{
+					data.videoUrl && (
+						<a
+							class="article-video-link"
+							href={data.videoUrl}
+							target="_blank"
+							rel="noreferrer"
+							data-reveal
+							style="--reveal-delay: 170ms;"
+						>
+							{t('觀看相關影片', 'WATCH THE RELATED VIDEO')} ↗
+						</a>
+					)
+				}
+			</header>
+
+			<div class="article-body">
+				<Content />
+			</div>
+		</article>
+	</main>
+</ArticleLayout>
+
+<style>
+	.article-main {
+		padding: clamp(68px, 9vw, 132px) clamp(24px, 7vw, 112px)
+			clamp(90px, 12vw, 170px);
+	}
+
+	.article-main > article {
+		max-width: 1120px;
+		margin: 0 auto;
+	}
+
+	.article-header {
+		padding-bottom: clamp(54px, 7vw, 92px);
+		border-bottom: 1px solid var(--line-strong);
+	}
+
+	.article-back {
+		display: inline-block;
+		margin-bottom: clamp(52px, 7vw, 94px);
+		color: var(--accent-text);
+		font-size: 0.62rem;
+		font-weight: 850;
+		letter-spacing: 0.16em;
+		text-underline-offset: 5px;
+	}
+
+	.article-meta {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 12px 24px;
+		color: var(--accent-text);
+		font-size: 0.62rem;
+		font-weight: 850;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+	}
+
+	.draft-badge {
+		padding: 4px 8px;
+		color: var(--forest-deep);
+		background: var(--acid);
+	}
+
+	.article-header h1 {
+		max-width: 920px;
+		margin: 24px 0 0;
+		font-size: clamp(2.7rem, 5.8vw, 5.6rem);
+		font-weight: 900;
+		letter-spacing: -0.075em;
+		line-height: 0.98;
+		text-wrap: balance;
+	}
+
+	.article-description {
+		max-width: 720px;
+		margin: 34px 0 0;
+		color: var(--muted);
+		font-family: var(--serif);
+		font-size: clamp(1.15rem, 2vw, 1.5rem);
+		line-height: 1.7;
+		text-wrap: pretty;
+	}
+
+	.article-video-link {
+		display: inline-block;
+		margin-top: 28px;
+		padding: 12px 16px;
+		color: var(--button-ink);
+		background: var(--forest);
+		font-size: 0.62rem;
+		font-weight: 850;
+		letter-spacing: 0.14em;
+		text-decoration: none;
+	}
+
+	.article-body {
+		max-width: 760px;
+		margin: clamp(54px, 8vw, 100px) auto 0;
+		font-family: var(--serif);
+		font-size: clamp(1.06rem, 1.5vw, 1.22rem);
+		line-height: 1.9;
+	}
+
+	.article-body :global(h2),
+	.article-body :global(h3) {
+		font-family: var(--sans);
+		letter-spacing: -0.04em;
+		line-height: 1.15;
+	}
+
+	.article-body :global(h2) {
+		margin: 2.6em 0 0.8em;
+		font-size: clamp(2rem, 4.5vw, 3.6rem);
+	}
+
+	.article-body :global(h3) {
+		margin: 2.2em 0 0.7em;
+		font-size: clamp(1.4rem, 2.5vw, 2rem);
+	}
+
+	.article-body :global(p),
+	.article-body :global(ul),
+	.article-body :global(ol) {
+		margin: 1.35em 0;
+	}
+
+	.article-body :global(a) {
+		color: var(--accent-text);
+		text-underline-offset: 4px;
+	}
+
+	.article-body :global(blockquote) {
+		margin: 2em 0;
+		padding: 4px 0 4px 24px;
+		border-left: 3px solid var(--acid);
+		color: var(--muted);
+	}
+
+	.article-body :global(img) {
+		margin: 2.5em auto;
+	}
+
+	.article-body :global(code) {
+		padding: 0.12em 0.32em;
+		background: var(--paper-deep);
+		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: 0.88em;
+	}
+</style>

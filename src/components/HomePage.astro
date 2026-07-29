@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import portrait from '../assets/portrait.png';
+import ScrollReveal from './ScrollReveal.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -167,6 +168,7 @@ const featuredVideos = [
 
 		<title>{siteTitle}</title>
 		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+		<ScrollReveal />
 		<script is:inline>
 			(() => {
 				const root = document.documentElement;
@@ -194,6 +196,7 @@ const featuredVideos = [
 					<nav class="desktop-nav" aria-label={t('主要導覽', 'Main navigation')}>
 						<a href="#about">{t('關於', 'ABOUT')}</a>
 						<a href="#content">{t('內容', 'CONTENT')}</a>
+						<a href={`/${lang}/articles/`}>{t('文章', 'ARTICLES')}</a>
 						<a href="#contact">{t('聯絡', 'CONTACT')}</a>
 					</nav>
 
@@ -236,7 +239,7 @@ const featuredVideos = [
 
 			<main id="top">
 				<section class="hero" aria-labelledby="hero-title">
-						<div class="hero-copy">
+						<div class="hero-copy" data-reveal>
 							<p class="eyebrow">
 								<span class="eyebrow-line" aria-hidden="true"></span>
 								{t(
@@ -302,7 +305,7 @@ const featuredVideos = [
 						</div>
 					</div>
 
-					<div class="portrait-wrap">
+					<div class="portrait-wrap" data-reveal="fade" style="--reveal-delay: 100ms;">
 						<div class="portrait-index" aria-hidden="true">/ 01</div>
 						<div class="portrait-frame">
 							<Image
@@ -332,13 +335,13 @@ const featuredVideos = [
 				</section>
 
 				<section class="about section-block" id="about" aria-labelledby="about-title">
-					<div class="section-label">
+					<div class="section-label" data-reveal="left">
 						<span>01</span>
 						<span>{t('關於我', 'ABOUT')}</span>
 					</div>
 
 					<div class="about-content">
-						<h2 id="about-title">
+						<h2 id="about-title" data-reveal>
 							{
 								isZh ? (
 									<span>
@@ -351,7 +354,7 @@ const featuredVideos = [
 								)
 							}
 						</h2>
-						<div class="about-copy">
+						<div class="about-copy" data-reveal style="--reveal-delay: 100ms;">
 							<p>
 								{t(
 									'我專注於《三角洲行動》遊戲運營，同時也是玩家與內容創作者。這裡收藏我的遊戲理解、實戰經歷、攻略解析與影像創作。',
@@ -369,7 +372,7 @@ const featuredVideos = [
 				</section>
 
 				<section class="content section-block" id="content" aria-labelledby="content-title">
-					<div class="section-heading">
+					<div class="section-heading" data-reveal>
 						<div class="section-label light">
 							<span>02</span>
 							<span>{t('正在進行', 'IN PROGRESS')}</span>
@@ -379,8 +382,12 @@ const featuredVideos = [
 
 					<div class="content-grid">
 						{
-							contentCards.map((card) => (
-								<article class="content-card">
+							contentCards.map((card, index) => (
+								<article
+									class="content-card"
+									data-reveal
+									style={`--reveal-delay: ${index * 70}ms;`}
+								>
 									<div class="card-topline">
 										<span>{card.index}</span>
 										<span>{t(card.eyebrowZh, card.eyebrowEn)}</span>
@@ -419,7 +426,7 @@ const featuredVideos = [
 						}
 					</div>
 
-					<div class="featured-heading">
+					<div class="featured-heading" data-reveal>
 						<div>
 							<p>{t('頻道精選', 'FEATURED FROM THE CHANNEL')}</p>
 							<h3>{t('精選影片', 'SELECTED VIDEOS')}</h3>
@@ -442,6 +449,8 @@ const featuredVideos = [
 									href={video.url}
 									target="_blank"
 									rel="noreferrer"
+									data-reveal
+									style={`--reveal-delay: ${(index % 2) * 80}ms;`}
 									aria-label={t(
 										`${video.titleZh}（在 YouTube 觀看）`,
 										`${video.titleEn} (watch on YouTube)`,
@@ -471,11 +480,11 @@ const featuredVideos = [
 				</section>
 
 				<section class="contact section-block" id="contact" aria-labelledby="contact-title">
-					<div class="section-label">
+					<div class="section-label" data-reveal="left">
 						<span>03</span>
 						<span>{t('保持聯絡', 'CONTACT')}</span>
 					</div>
-					<div class="contact-content">
+					<div class="contact-content" data-reveal>
 						<p class="contact-kicker">{t('下一個故事，從這裡開始。', 'THE NEXT STORY STARTS HERE.')}</p>
 						<h2 id="contact-title">{t('一起聊聊。', 'LET’S TALK.')}</h2>
 						<p class="contact-note">

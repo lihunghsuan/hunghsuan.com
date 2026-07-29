@@ -1,0 +1,253 @@
+---
+import '../styles/global.css';
+import ScrollReveal from '../components/ScrollReveal.astro';
+
+interface Props {
+	lang: 'zh' | 'en';
+	title: string;
+	description: string;
+	canonicalPath: string;
+	translationPath?: string;
+	pageType?: 'website' | 'article';
+	publishedAt?: Date;
+	updatedAt?: Date;
+	draft?: boolean;
+}
+
+const {
+	lang,
+	title,
+	description,
+	canonicalPath,
+	translationPath,
+	pageType = 'website',
+	publishedAt,
+	updatedAt,
+	draft = false,
+} = Astro.props;
+const isZh = lang === 'zh';
+const alternateLang = isZh ? 'en' : 'zh';
+const t = (zh: string, en: string) => (isZh ? zh : en);
+const canonicalURL = new URL(canonicalPath, Astro.site);
+const translationURL = translationPath ? new URL(translationPath, Astro.site) : undefined;
+const languagePath = translationPath ?? `/${alternateLang}/articles/`;
+const socialImageURL = new URL('/og.png', Astro.site);
+const fullTitle = `${title} — Hunghsuan`;
+const structuredData =
+	pageType === 'article'
+		? {
+				'@context': 'https://schema.org',
+				'@type': 'Article',
+				headline: title,
+				description,
+				inLanguage: isZh ? 'zh-Hant' : 'en',
+				mainEntityOfPage: canonicalURL.href,
+				image: socialImageURL.href,
+				datePublished: publishedAt?.toISOString(),
+				dateModified: (updatedAt ?? publishedAt)?.toISOString(),
+				author: {
+					'@type': 'Person',
+					name: 'Hunghsuan',
+					url: `https://hunghsuan.com/${lang}/`,
+				},
+			}
+		: {
+				'@context': 'https://schema.org',
+				'@type': 'CollectionPage',
+				name: title,
+				description,
+				inLanguage: isZh ? 'zh-Hant' : 'en',
+				url: canonicalURL.href,
+			};
+---
+
+<!doctype html>
+<html lang={isZh ? 'zh-Hant' : 'en'}>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="canonical" href={canonicalURL} />
+		{
+			translationURL && (
+				<>
+					<link
+						rel="alternate"
+						hreflang={isZh ? 'en' : 'zh-Hant'}
+						href={translationURL}
+					/>
+					<link
+						rel="alternate"
+						hreflang={isZh ? 'zh-Hant' : 'en'}
+						href={canonicalURL}
+					/>
+				</>
+			)
+		}
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<meta name="author" content="Hunghsuan" />
+		<meta
+			name="robots"
+			content={draft ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'}
+		/>
+		<meta name="generator" content={Astro.generator} />
+		<meta name="theme-color" content="#f1eee5" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#101713" media="(prefers-color-scheme: dark)" />
+
+		<meta property="og:type" content={pageType} />
+		<meta property="og:site_name" content="Hunghsuan" />
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:image" content={socialImageURL} />
+		<meta property="og:locale" content={isZh ? 'zh_TW' : 'en_US'} />
+		{
+			pageType === 'article' && publishedAt && (
+				<meta property="article:published_time" content={publishedAt.toISOString()} />
+			)
+		}
+		{
+			pageType === 'article' && updatedAt && (
+				<meta property="article:modified_time" content={updatedAt.toISOString()} />
+			)
+		}
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={fullTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={socialImageURL} />
+
+		<title>{fullTitle}</title>
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+		<ScrollReveal />
+		<script is:inline>
+			(() => {
+				const root = document.documentElement;
+				const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+				let preference = 'auto';
+
+				try {
+					preference = localStorage.getItem('theme-preference') || 'auto';
+				} catch {}
+
+				root.dataset.themePreference = preference;
+				root.dataset.theme =
+					preference === 'auto' ? (systemTheme.matches ? 'dark' : 'light') : preference;
+			})();
+		</script>
+	</head>
+	<body>
+		<div class="page-shell article-page-shell">
+			<header class="site-header">
+				<a
+					class="brand"
+					href={`/${lang}/`}
+					aria-label={t('返回 Hunghsuan 首頁', 'Back to Hunghsuan home')}
+				>
+					<span class="brand-mark" aria-hidden="true">H</span>
+					<span>HUNGHSUAN</span>
+				</a>
+
+				<nav class="desktop-nav" aria-label={t('主要導覽', 'Main navigation')}>
+					<a href={`/${lang}/`}>{t('首頁', 'HOME')}</a>
+					<a href={`/${lang}/articles/`} aria-current="page">{t('文章', 'ARTICLES')}</a>
+				</nav>
+
+				<div class="header-controls">
+					<div class="theme-control" role="group" aria-label={t('外觀主題', 'Theme')}>
+						<button
+							type="button"
+							data-theme-choice="auto"
+							aria-label={t('跟隨系統主題', 'Use system theme')}
+						>
+							{t('自動', 'AUTO')}
+						</button>
+						<button
+							type="button"
+							data-theme-choice="light"
+							aria-label={t('使用淺色主題', 'Use light theme')}
+						>
+							<span aria-hidden="true">☼</span>
+						</button>
+						<button
+							type="button"
+							data-theme-choice="dark"
+							aria-label={t('使用深色主題', 'Use dark theme')}
+						>
+							<span aria-hidden="true">◐</span>
+						</button>
+					</div>
+					<a
+						class="language-toggle"
+						href={languagePath}
+						data-language-link
+						data-language={alternateLang}
+						aria-label={isZh ? 'Switch to English' : '切換至繁體中文'}
+					>
+						<span>{isZh ? 'EN' : '中'}</span>
+						<span class="toggle-dot" aria-hidden="true"></span>
+					</a>
+				</div>
+			</header>
+
+			<slot />
+
+			<footer class="site-footer">
+				<span>© 2026 HUNGHSUAN</span>
+				<span>{t('以 Astro 製作', 'BUILT WITH ASTRO')}</span>
+				<a href={`/${lang}/`}>{t('返回首頁', 'BACK HOME')} →</a>
+			</footer>
+		</div>
+
+		<script is:inline>
+			const root = document.documentElement;
+			const languageLink = document.querySelector('[data-language-link]');
+			const themeButtons = document.querySelectorAll('[data-theme-choice]');
+			const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+			const applyTheme = (preference) => {
+				const theme =
+					preference === 'auto' ? (systemTheme.matches ? 'dark' : 'light') : preference;
+				root.dataset.themePreference = preference;
+				root.dataset.theme = theme;
+
+				themeButtons.forEach((button) => {
+					button.setAttribute(
+						'aria-pressed',
+						String(button.dataset.themeChoice === preference),
+					);
+				});
+			};
+
+			themeButtons.forEach((button) => {
+				button.addEventListener('click', () => {
+					const preference = button.dataset.themeChoice;
+					applyTheme(preference);
+
+					try {
+						localStorage.setItem('theme-preference', preference);
+					} catch {}
+				});
+			});
+
+			systemTheme.addEventListener('change', () => {
+				if (root.dataset.themePreference === 'auto') applyTheme('auto');
+			});
+
+			applyTheme(root.dataset.themePreference || 'auto');
+
+			languageLink?.addEventListener('click', () => {
+				try {
+					localStorage.setItem('language-preference', languageLink.dataset.language);
+				} catch {}
+			});
+		</script>
+	</body>
+</html>
+
+<style>
+	.article-page-shell {
+		min-height: 100vh;
+	}
+</style>
