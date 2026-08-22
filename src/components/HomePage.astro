@@ -14,12 +14,12 @@ const alternateLang = isZh ? 'en' : 'zh';
 const t = (zh: string, en: string) => (isZh ? zh : en);
 
 const siteTitle = t(
-	'Hunghsuan 帶哥 — 三角洲行動遊戲運營與內容創作者',
-	'Hunghsuan — Delta Force Game Operations & Content Creator',
+	'Hunghsuan 帶哥 — 遊戲從業者、玩家與內容創作者',
+	'Hunghsuan — Games Industry Professional, Player & Creator',
 );
 const siteDescription = t(
-	'Hunghsuan（帶哥）的個人網站——三角洲行動遊戲運營、玩家與內容創作者，分享實戰、攻略與遊戲內容。',
-	'Hunghsuan (Dai Ge) works in Delta Force game operations and creates gameplay videos, guides, and gaming stories.',
+	'Hunghsuan（帶哥）的個人網站——遊戲從業者、玩家與內容創作者，分享 PUBG MOBILE、《三角洲行動》與遊戲內容。',
+	'Hunghsuan (Dai Ge) works in the games industry, plays PUBG MOBILE and Delta Force, and makes gaming videos and guides.',
 );
 const canonicalURL = new URL(`/${lang}/`, Astro.site);
 const chineseURL = new URL('/zh/', Astro.site);
@@ -34,7 +34,7 @@ const structuredData = {
 	url: canonicalURL.href,
 	image: 'https://hunghsuan.com/1.png',
 	description: siteDescription,
-	jobTitle: t('三角洲行動遊戲運營', 'Delta Force Game Operations'),
+	jobTitle: t('遊戲從業者與內容創作者', 'Games Industry Professional and Content Creator'),
 	email: 'mailto:lihunghsuan@gmail.com',
 	knowsLanguage: ['zh-Hant', 'en'],
 	sameAs: [
@@ -48,12 +48,12 @@ const contentCards = [
 		index: '01',
 		eyebrowZh: '遊戲',
 		eyebrowEn: 'GAMING',
-		titleZh: '戰術與遊戲紀錄',
-		titleEn: 'Tactics & gameplay',
-		descriptionZh: '從遊戲運營與玩家的雙重視角，記錄三角洲行動的內容、系統與實戰體驗。',
-		descriptionEn: 'Delta Force content, systems, and gameplay through both operator and player lenses.',
-		statusZh: '三角洲行動遊戲運營',
-		statusEn: 'PROFESSIONAL FOCUS',
+		titleZh: '遊戲心得與紀錄',
+		titleEn: 'Gameplay notes',
+		descriptionZh: '從玩家與遊戲從業者的角度，記錄 PUBG MOBILE、《三角洲行動》的戰術與實戰心得。',
+		descriptionEn: 'Notes on PUBG MOBILE and Delta Force tactics and matches—from a player who also works in games.',
+		statusZh: '遊戲從業者・玩家',
+		statusEn: 'GAMES INDUSTRY · PLAYER',
 		links: [],
 	},
 	{
@@ -61,9 +61,9 @@ const contentCards = [
 		eyebrowZh: '影片',
 		eyebrowEn: 'VIDEO',
 		titleZh: '精選內容',
-		titleEn: 'Featured stories',
+		titleEn: 'Videos & shorts',
 		descriptionZh: '在 YouTube 分享影片、短片與遊戲內容，記錄每一段有趣的過程。',
-		descriptionEn: 'Videos, shorts, and gaming stories—capturing every worthwhile moment.',
+		descriptionEn: 'I post gameplay videos, shorts, and the occasional story from the games I play.',
 		statusZh: '觀看我的頻道',
 		statusEn: 'WATCH MY CHANNELS',
 		links: [
@@ -78,7 +78,7 @@ const contentCards = [
 		titleZh: '和我一起上線',
 		titleEn: 'Catch me live',
 		descriptionZh: '在 YouTube 與 Bilibili 不定期直播，一起進入遊戲現場。',
-		descriptionEn: 'Join me live on YouTube and Bilibili for gameplay and real-time moments.',
+		descriptionEn: 'I stream on YouTube and Bilibili from time to time. Drop in when I’m live.',
 		statusZh: '不定期開播',
 		statusEn: 'SCHEDULE VARIES',
 		links: [
@@ -155,8 +155,8 @@ const featuredVideos = [
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 		<meta property="og:image:alt" content={t(
-			'Hunghsuan——三角洲行動遊戲運營與內容創作者',
-			'Hunghsuan — Delta Force Operations and Content Creator',
+			'Hunghsuan——遊戲從業者、玩家與內容創作者',
+			'Hunghsuan — Games Industry Professional, Player and Creator',
 		)} />
 		<meta property="og:locale" content={isZh ? 'zh_TW' : 'en_US'} />
 		<meta property="og:locale:alternate" content={isZh ? 'en_US' : 'zh_TW'} />
@@ -243,8 +243,8 @@ const featuredVideos = [
 							<p class="eyebrow">
 								<span class="eyebrow-line" aria-hidden="true"></span>
 								{t(
-									'帶哥・三角洲行動遊戲運營・內容創作者',
-									'DELTA FORCE OPERATIONS · PLAYER · CREATOR',
+									'帶哥・遊戲從業者・玩家・內容創作者',
+									'GAMES INDUSTRY · PLAYER · CREATOR',
 								)}
 							</p>
 
@@ -258,12 +258,12 @@ const featuredVideos = [
 								isZh ? (
 									<p>
 										嗨，我是 Hunghsuan，也可以叫我帶哥。<br />
-										我從事《三角洲行動》遊戲運營，也把實戰、攻略與想法整理成內容。
+										我在遊戲產業工作，也玩 PUBG MOBILE 和《三角洲行動》，並把實戰心得做成影片和攻略。
 									</p>
 								) : (
 									<p>
-										Hi, I’m Hunghsuan—also known as Dai Ge.<br />I work in Delta Force game
-										operations and turn gameplay, guides, and ideas into stories.
+										Hi, I’m Hunghsuan—also known as Dai Ge.<br />I work in the games industry,
+										play PUBG MOBILE and Delta Force, and make gaming videos and guides.
 									</p>
 								)
 							}
@@ -357,13 +357,14 @@ const featuredVideos = [
 						<div class="about-copy" data-reveal style="--reveal-delay: 100ms;">
 							<p>
 								{t(
-									'我專注於《三角洲行動》遊戲運營，同時也是玩家與內容創作者。這裡收藏我的遊戲理解、實戰經歷、攻略解析與影像創作。',
-									'I work in Delta Force game operations, while creating from a player’s perspective. This is my base for game insights, field experience, guides, and video.',
+									'我在遊戲產業工作，也玩 PUBG MOBILE 和《三角洲行動》，並把實戰心得做成影片和攻略。這個網站用來整理一路上學到、值得分享的東西。',
+									'I work in the games industry, play PUBG MOBILE and Delta Force, and make gaming videos and guides. This site is where I keep the useful things I’ve learned along the way.',
 								)}
 							</p>
 							<ul class="interest-list" aria-label={t('興趣與專長', 'Interests')}>
+								<li>PUBG MOBILE</li>
 								<li>DELTA FORCE</li>
-								<li>OPERATIONS</li>
+								<li>GAMES INDUSTRY</li>
 								<li>VIDEO</li>
 								<li>GAMEPLAY</li>
 							</ul>
@@ -485,12 +486,12 @@ const featuredVideos = [
 						<span>{t('保持聯絡', 'CONTACT')}</span>
 					</div>
 					<div class="contact-content" data-reveal>
-						<p class="contact-kicker">{t('下一個故事，從這裡開始。', 'THE NEXT STORY STARTS HERE.')}</p>
+						<p class="contact-kicker">{t('有事想聊，歡迎來信。', 'QUESTIONS OR COLLABS?')}</p>
 						<h2 id="contact-title">{t('一起聊聊。', 'LET’S TALK.')}</h2>
 						<p class="contact-note">
 							{t(
 								'工作交流或合作邀請，歡迎來信；也可以從頻道認識我的內容。',
-								'For professional conversations or collaborations, send me an email or explore my channels.',
+								'Email me about work, collaborations, or anything else. You can also find me on YouTube and Bilibili.',
 							)}
 						</p>
 						<div class="contact-socials">
