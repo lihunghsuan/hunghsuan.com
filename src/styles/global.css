@@ -998,13 +998,15 @@ img {
 		grid-column: 1 / -1;
 		grid-row: 2;
 		justify-content: space-between;
+		gap: 8px;
 		width: 100%;
 		padding-top: 10px;
 		border-top: 1px solid var(--line);
 	}
 
 	.desktop-nav a {
-		font-size: 0.64rem;
+		font-size: 0.58rem;
+		letter-spacing: 0.13em;
 	}
 
 	.header-controls {

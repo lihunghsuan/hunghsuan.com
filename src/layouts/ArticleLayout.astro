@@ -12,6 +12,7 @@ interface Props {
 	publishedAt?: Date;
 	updatedAt?: Date;
 	draft?: boolean;
+	section?: 'articles' | 'reviews';
 }
 
 const {
@@ -24,13 +25,14 @@ const {
 	publishedAt,
 	updatedAt,
 	draft = false,
+	section = 'articles',
 } = Astro.props;
 const isZh = lang === 'zh';
 const alternateLang = isZh ? 'en' : 'zh';
 const t = (zh: string, en: string) => (isZh ? zh : en);
 const canonicalURL = new URL(canonicalPath, Astro.site);
 const translationURL = translationPath ? new URL(translationPath, Astro.site) : undefined;
-const languagePath = translationPath ?? `/${alternateLang}/articles/`;
+const languagePath = translationPath ?? `/${alternateLang}/${section}/`;
 const socialImageURL = new URL('/og.png', Astro.site);
 const fullTitle = `${title} — Hunghsuan`;
 const structuredData =
@@ -151,7 +153,18 @@ const structuredData =
 
 				<nav class="desktop-nav" aria-label={t('主要導覽', 'Main navigation')}>
 					<a href={`/${lang}/`}>{t('首頁', 'HOME')}</a>
-					<a href={`/${lang}/articles/`} aria-current="page">{t('文章', 'ARTICLES')}</a>
+					<a
+						href={`/${lang}/articles/`}
+						aria-current={section === 'articles' ? 'page' : undefined}
+					>
+						{t('文章', 'ARTICLES')}
+					</a>
+					<a
+						href={`/${lang}/reviews/`}
+						aria-current={section === 'reviews' ? 'page' : undefined}
+					>
+						{t('影評', 'REVIEWS')}
+					</a>
 				</nav>
 
 				<div class="header-controls">

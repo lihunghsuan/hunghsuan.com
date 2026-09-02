@@ -1,0 +1,294 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import ArticleLayout from '../layouts/ArticleLayout.astro';
+
+interface Props {
+	entry: CollectionEntry<'reviews'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { data } = entry;
+const isZh = data.lang === 'zh';
+const t = (zh: string, en: string) => (isZh ? zh : en);
+const includeDrafts = import.meta.env.DEV;
+const allReviews = await getCollection(
+	'reviews',
+	({ data: reviewData }) => includeDrafts || !reviewData.draft,
+);
+const translation = allReviews.find(
+	(review) => review.data.translationKey === data.translationKey && review.data.lang !== data.lang,
+);
+const translationPath = translation
+	? `/${translation.data.lang}/reviews/${translation.data.reviewSlug}/`
+	: undefined;
+const canonicalPath = `/${data.lang}/reviews/${data.reviewSlug}/`;
+const statusLabel =
+	data.status === 'watching' ? t('觀看中', 'WATCHING') : t('已看完', 'FINISHED');
+---
+
+<ArticleLayout
+	lang={data.lang}
+	title={data.title}
+	description={data.description}
+	canonicalPath={canonicalPath}
+	translationPath={translationPath}
+	pageType="article"
+	publishedAt={data.publishedAt}
+	updatedAt={data.updatedAt}
+	draft={data.draft || data.sample}
+	section="reviews"
+>
+	<main class="review-main">
+		<article>
+			<header class="review-header">
+				<a class="review-back" href={`/${data.lang}/reviews/`} data-reveal="left">
+					← {t('所有影評', 'ALL REVIEWS')}
+				</a>
+				<div class="review-meta" data-reveal>
+					<span>{statusLabel}</span>
+					<span>{data.year}</span>
+					{data.season && <span>{t(`第 ${data.season} 季`, `SEASON ${data.season}`)}</span>}
+					{data.latestEpisode && <span>{t(`看到第 ${data.latestEpisode.number} 話`, `THROUGH EPISODE ${data.latestEpisode.number}`)}</span>}
+					{data.spoiler && <span class="spoiler-badge">{t('含劇透', 'SPOILERS')}</span>}
+					{data.sample && <span class="sample-badge">{t('示例草稿', 'SAMPLE DRAFT')}</span>}
+				</div>
+				<div class="review-title-row">
+					<div>
+						<h1 data-reveal style="--reveal-delay: 70ms;">{data.title}</h1>
+						<p class="review-original-title" data-reveal style="--reveal-delay: 100ms;">
+							{data.originalTitle}
+						</p>
+					</div>
+					<div class="review-rating" data-reveal style="--reveal-delay: 120ms;">
+						<strong>{data.rating?.toFixed(1) ?? data.latestEpisode?.rating?.toFixed(1) ?? '—'}</strong>
+						<span>
+							{data.rating !== undefined
+								? '/ 10'
+								: data.latestEpisode?.rating !== undefined
+									? t(`第 ${data.latestEpisode.number} 話 / 10`, `EP ${data.latestEpisode.number} / 10`)
+									: t('待評分', 'NOT RATED')}
+						</span>
+					</div>
+				</div>
+				<p class="review-description" data-reveal style="--reveal-delay: 150ms;">
+					{data.description}
+				</p>
+				{
+					data.sample && (
+						<p class="sample-note" data-reveal style="--reveal-delay: 180ms;">
+							{t(
+								'這是用來確認版面與資料結構的本地示例，尚未填入我的實際評分與完整觀點。',
+								'This local sample is for checking the layout and content structure. My actual rating and full thoughts have not been added yet.',
+							)}
+						</p>
+					)
+				}
+			</header>
+
+			<div class="review-body">
+				<Content />
+			</div>
+
+			<footer class="review-links">
+				{data.officialUrl && (
+					<a href={data.officialUrl} target="_blank" rel="noreferrer">
+						{t('作品官方網站', 'OFFICIAL WEBSITE')} ↗
+					</a>
+				)}
+				{data.externalReviews.map((externalReview) => (
+					<a href={externalReview.url} target="_blank" rel="noreferrer">
+						{externalReview.platform} ↗
+					</a>
+				))}
+			</footer>
+		</article>
+	</main>
+</ArticleLayout>
+
+<style>
+	.review-main {
+		padding: clamp(68px, 9vw, 132px) clamp(24px, 7vw, 112px)
+			clamp(90px, 12vw, 170px);
+	}
+
+	.review-main > article {
+		max-width: 1120px;
+		margin: 0 auto;
+	}
+
+	.review-header {
+		padding-bottom: clamp(54px, 7vw, 92px);
+		border-bottom: 1px solid var(--line-strong);
+	}
+
+	.review-back {
+		display: inline-block;
+		margin-bottom: clamp(52px, 7vw, 94px);
+		color: var(--accent-text);
+		font-size: 0.62rem;
+		font-weight: 850;
+		letter-spacing: 0.16em;
+		text-underline-offset: 5px;
+	}
+
+	.review-meta {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 12px 24px;
+		color: var(--accent-text);
+		font-size: 0.62rem;
+		font-weight: 850;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+	}
+
+	.sample-badge {
+		padding: 4px 8px;
+		color: var(--forest-deep);
+		background: var(--acid);
+	}
+
+	.spoiler-badge {
+		padding: 4px 8px;
+		border: 1px solid currentColor;
+	}
+
+	.review-title-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: end;
+		gap: clamp(32px, 7vw, 110px);
+		margin-top: 24px;
+	}
+
+	.review-title-row h1 {
+		max-width: 900px;
+		margin: 0;
+		font-size: clamp(2.7rem, 5.8vw, 5.6rem);
+		font-weight: 900;
+		letter-spacing: -0.075em;
+		line-height: 0.98;
+		text-wrap: balance;
+	}
+
+	.review-original-title {
+		margin: 22px 0 0;
+		color: var(--muted);
+		font-size: 0.72rem;
+		font-weight: 750;
+		letter-spacing: 0.06em;
+	}
+
+	.review-rating {
+		display: grid;
+		min-width: 120px;
+		text-align: right;
+	}
+
+	.review-rating strong {
+		font-family: var(--serif);
+		font-size: clamp(4rem, 7vw, 7rem);
+		font-style: italic;
+		font-weight: 500;
+		line-height: 0.8;
+	}
+
+	.review-rating span {
+		margin-top: 14px;
+		color: var(--accent-text);
+		font-size: 0.58rem;
+		font-weight: 850;
+		letter-spacing: 0.14em;
+	}
+
+	.review-description {
+		max-width: 720px;
+		margin: 38px 0 0;
+		color: var(--muted);
+		font-family: var(--serif);
+		font-size: clamp(1.15rem, 2vw, 1.5rem);
+		line-height: 1.7;
+	}
+
+	.sample-note {
+		max-width: 720px;
+		margin: 28px 0 0;
+		padding: 18px 20px;
+		border: 1px solid var(--line-strong);
+		background: var(--paper-deep);
+		font-size: 0.8rem;
+		line-height: 1.65;
+	}
+
+	.review-body {
+		max-width: 760px;
+		margin: clamp(54px, 8vw, 100px) auto 0;
+		font-family: var(--serif);
+		font-size: clamp(1.06rem, 1.5vw, 1.22rem);
+		line-height: 1.9;
+	}
+
+	.review-body :global(h2),
+	.review-body :global(h3) {
+		font-family: var(--sans);
+		letter-spacing: -0.04em;
+		line-height: 1.15;
+	}
+
+	.review-body :global(h2) {
+		margin: 2.6em 0 0.8em;
+		font-size: clamp(2rem, 4.5vw, 3.6rem);
+	}
+
+	.review-body :global(h3) {
+		margin: 2.2em 0 0.7em;
+		font-size: clamp(1.4rem, 2.5vw, 2rem);
+	}
+
+	.review-body :global(p),
+	.review-body :global(ul),
+	.review-body :global(ol) {
+		margin: 1.35em 0;
+	}
+
+	.review-body :global(blockquote) {
+		margin: 2em 0;
+		padding: 4px 0 4px 24px;
+		border-left: 3px solid var(--acid);
+		color: var(--muted);
+	}
+
+	.review-links {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 14px;
+		max-width: 760px;
+		margin: clamp(60px, 9vw, 110px) auto 0;
+		padding-top: 34px;
+		border-top: 1px solid var(--line);
+	}
+
+	.review-links a {
+		padding: 12px 16px;
+		color: var(--button-ink);
+		background: var(--forest);
+		font-size: 0.62rem;
+		font-weight: 850;
+		letter-spacing: 0.14em;
+		text-decoration: none;
+	}
+
+	@media (max-width: 680px) {
+		.review-title-row {
+			grid-template-columns: 1fr;
+		}
+
+		.review-rating {
+			justify-self: start;
+			text-align: left;
+		}
+	}
+</style>

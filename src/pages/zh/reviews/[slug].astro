@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import ReviewPage from '../../../components/ReviewPage.astro';
+
+export async function getStaticPaths() {
+	const reviews = await getCollection(
+		'reviews',
+		({ data }) => data.lang === 'zh' && (import.meta.env.DEV || !data.draft),
+	);
+
+	return reviews.map((entry) => ({
+		params: { slug: entry.data.reviewSlug },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+---
+
+<ReviewPage entry={entry} />

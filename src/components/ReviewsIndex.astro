@@ -1,0 +1,289 @@
+---
+import { getCollection } from 'astro:content';
+import ArticleLayout from '../layouts/ArticleLayout.astro';
+
+interface Props {
+	lang: 'zh' | 'en';
+}
+
+const { lang } = Astro.props;
+const isZh = lang === 'zh';
+const t = (zh: string, en: string) => (isZh ? zh : en);
+const includeDrafts = import.meta.env.DEV;
+const reviews = (
+	await getCollection(
+		'reviews',
+		({ data }) => data.lang === lang && (includeDrafts || !data.draft),
+	)
+).sort(
+	(a, b) =>
+		(b.data.updatedAt ?? b.data.publishedAt).valueOf() -
+		(a.data.updatedAt ?? a.data.publishedAt).valueOf(),
+);
+const title = t('影評', 'Reviews');
+const description = t(
+	'Hunghsuan 的電影、動畫與影集觀看筆記。評分與文字以本站版本為準，外部影評頁則作為延伸入口。',
+	'Hunghsuan’s notes on films, anime, and series. The version published here is the source of truth, with links to external review profiles when available.',
+);
+const statusLabel = (status: 'watching' | 'finished') =>
+	status === 'watching' ? t('觀看中', 'WATCHING') : t('已看完', 'FINISHED');
+---
+
+<ArticleLayout
+	lang={lang}
+	title={title}
+	description={description}
+	canonicalPath={`/${lang}/reviews/`}
+	translationPath={`/${isZh ? 'en' : 'zh'}/reviews/`}
+	section="reviews"
+>
+	<main class="reviews-main">
+		<header class="reviews-hero">
+			<div class="reviews-kicker" data-reveal="left">
+				<span>05</span>
+				<span>{t('觀影筆記', 'SCREEN NOTES')}</span>
+			</div>
+			<div class="reviews-heading">
+				<h1 data-reveal>{title}</h1>
+				<p data-reveal style="--reveal-delay: 90ms;">{description}</p>
+			</div>
+		</header>
+
+		<section class="reviews-section" aria-labelledby="reviews-list-title">
+			<div class="reviews-section-heading" data-reveal>
+				<h2 id="reviews-list-title">{t('最近觀看', 'RECENTLY WATCHED')}</h2>
+				<span>{String(reviews.length).padStart(2, '0')}</span>
+			</div>
+
+			<div class="reviews-grid">
+				{
+					reviews.map((review, index) => (
+						<a
+							class="review-card"
+							href={`/${lang}/reviews/${review.data.reviewSlug}/`}
+							data-reveal
+							style={`--reveal-delay: ${(index % 2) * 80}ms;`}
+						>
+							<div class="review-card-topline">
+								<span>{String(index + 1).padStart(2, '0')}</span>
+								<span>{statusLabel(review.data.status)}</span>
+							</div>
+							<div class="review-card-copy">
+								<div class="review-card-meta">
+									<span>{review.data.year}</span>
+									{review.data.season && <span>{t(`第 ${review.data.season} 季`, `SEASON ${review.data.season}`)}</span>}
+									{review.data.sample && <span class="sample-badge">{t('示例草稿', 'SAMPLE DRAFT')}</span>}
+								</div>
+								<h3>{review.data.title}</h3>
+								<p class="review-original-title">{review.data.originalTitle}</p>
+								<p class="review-description">{review.data.description}</p>
+							</div>
+							<div class="review-score">
+								<strong>
+									{review.data.rating?.toFixed(1) ?? review.data.latestEpisode?.rating?.toFixed(1) ?? '—'}
+								</strong>
+								<span>
+									{review.data.rating !== undefined
+										? '/ 10'
+										: review.data.latestEpisode?.rating !== undefined
+											? t(`第 ${review.data.latestEpisode.number} 話`, `EP ${review.data.latestEpisode.number}`)
+											: t('待評分', 'NOT RATED')}
+								</span>
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</section>
+	</main>
+</ArticleLayout>
+
+<style>
+	.reviews-main {
+		min-height: calc(100vh - 84px);
+	}
+
+	.reviews-hero {
+		display: grid;
+		grid-template-columns: minmax(180px, 0.42fr) minmax(0, 1fr);
+		gap: 32px clamp(40px, 8vw, 130px);
+		padding: clamp(76px, 10vw, 148px) clamp(24px, 7vw, 112px);
+		border-bottom: 1px solid var(--line);
+	}
+
+	.reviews-kicker,
+	.review-card-topline,
+	.review-card-meta {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 12px 18px;
+		color: var(--accent-text);
+		font-size: 0.6rem;
+		font-weight: 850;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+	}
+
+	.reviews-kicker {
+		align-self: start;
+		padding-top: 14px;
+	}
+
+	.reviews-kicker > span:first-child {
+		display: grid;
+		width: 28px;
+		height: 28px;
+		place-items: center;
+		border: 1px solid currentColor;
+		border-radius: 50%;
+		font-family: var(--serif);
+		font-style: italic;
+		letter-spacing: 0;
+	}
+
+	.reviews-heading h1 {
+		margin: 0;
+		font-size: clamp(4rem, 10vw, 9.5rem);
+		font-weight: 900;
+		letter-spacing: -0.08em;
+		line-height: 0.84;
+	}
+
+	.reviews-heading > p {
+		max-width: 720px;
+		margin: 38px 0 0;
+		font-family: var(--serif);
+		font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+		line-height: 1.7;
+	}
+
+	.reviews-section {
+		padding: clamp(72px, 9vw, 130px) clamp(24px, 7vw, 112px);
+	}
+
+	.reviews-section-heading {
+		display: flex;
+		align-items: end;
+		justify-content: space-between;
+		gap: 24px;
+		padding-bottom: 22px;
+		border-bottom: 1px solid var(--line-strong);
+	}
+
+	.reviews-section-heading h2 {
+		margin: 0;
+		font-size: clamp(1.6rem, 3.5vw, 3.4rem);
+		letter-spacing: -0.05em;
+	}
+
+	.reviews-section-heading > span {
+		font-family: var(--serif);
+		font-size: 0.82rem;
+		font-style: italic;
+	}
+
+	.reviews-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		border-left: 1px solid var(--line);
+	}
+
+	.review-card {
+		position: relative;
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+		min-height: 430px;
+		padding: clamp(26px, 4vw, 48px);
+		border-right: 1px solid var(--line);
+		border-bottom: 1px solid var(--line);
+		text-decoration: none;
+		transition: background-color 180ms ease, transform 180ms ease;
+	}
+
+	.review-card:hover,
+	.review-card:focus-visible {
+		background: var(--paper-deep);
+		transform: translateY(-4px);
+	}
+
+	.review-card-topline {
+		justify-content: space-between;
+	}
+
+	.review-card-copy {
+		align-self: center;
+		padding: 48px 0;
+	}
+
+	.review-card h3 {
+		max-width: 620px;
+		margin: 20px 0 12px;
+		font-family: var(--serif);
+		font-size: clamp(2rem, 4vw, 4rem);
+		font-weight: 500;
+		line-height: 1.02;
+		text-wrap: balance;
+	}
+
+	.review-original-title,
+	.review-description {
+		max-width: 620px;
+		color: var(--muted);
+	}
+
+	.review-original-title {
+		margin: 0;
+		font-size: 0.75rem;
+		font-weight: 750;
+		letter-spacing: 0.06em;
+	}
+
+	.review-description {
+		margin: 24px 0 0;
+		line-height: 1.7;
+	}
+
+	.sample-badge {
+		padding: 4px 8px;
+		color: var(--forest-deep);
+		background: var(--acid);
+	}
+
+	.review-score {
+		display: flex;
+		align-items: baseline;
+		justify-content: flex-end;
+		gap: 10px;
+		padding-top: 22px;
+		border-top: 1px solid var(--line);
+	}
+
+	.review-score strong {
+		font-family: var(--serif);
+		font-size: 2.6rem;
+		font-style: italic;
+		font-weight: 500;
+	}
+
+	.review-score span {
+		color: var(--accent-text);
+		font-size: 0.58rem;
+		font-weight: 850;
+		letter-spacing: 0.14em;
+	}
+
+	@media (max-width: 760px) {
+		.reviews-hero {
+			grid-template-columns: 1fr;
+		}
+
+		.reviews-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.review-card {
+			min-height: 390px;
+		}
+	}
+</style>
