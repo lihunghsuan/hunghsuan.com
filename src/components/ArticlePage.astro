@@ -131,7 +131,7 @@ const dateFormatter = new Intl.DateTimeFormat(isZh ? 'zh-TW' : 'en-US', {
 		margin: 24px 0 0;
 		font-size: clamp(2.7rem, 5.8vw, 5.6rem);
 		font-weight: 900;
-		letter-spacing: -0.075em;
+		letter-spacing: var(--tracking-display);
 		line-height: 0.98;
 		text-wrap: balance;
 	}
@@ -169,7 +169,7 @@ const dateFormatter = new Intl.DateTimeFormat(isZh ? 'zh-TW' : 'en-US', {
 	.article-body :global(h2),
 	.article-body :global(h3) {
 		font-family: var(--sans);
-		letter-spacing: -0.04em;
+		letter-spacing: var(--tracking-heading);
 		line-height: 1.15;
 	}
 

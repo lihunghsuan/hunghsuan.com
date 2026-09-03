@@ -12,7 +12,7 @@ interface Props {
 	publishedAt?: Date;
 	updatedAt?: Date;
 	draft?: boolean;
-	section?: 'articles' | 'reviews';
+	section?: 'articles' | 'reviews' | 'library';
 }
 
 const {
@@ -164,6 +164,12 @@ const structuredData =
 						aria-current={section === 'reviews' ? 'page' : undefined}
 					>
 						{t('影評', 'REVIEWS')}
+					</a>
+					<a
+						href={`/${lang}/library/`}
+						aria-current={section === 'library' ? 'page' : undefined}
+					>
+						{t('收藏庫', 'LIBRARY')}
 					</a>
 				</nav>
 

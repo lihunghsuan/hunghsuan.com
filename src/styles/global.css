@@ -16,9 +16,16 @@
 	--content-muted: rgba(241, 238, 229, 0.65);
 	--button-ink: #f1eee5;
 	--muted: #62685f;
+	--tracking-display: -0.025em;
+	--tracking-heading: -0.012em;
 	--sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
 		"Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
 	--serif: Iowan Old Style, "Times New Roman", "Noto Serif TC", serif;
+}
+
+html:lang(zh-Hant) {
+	--tracking-display: -0.012em;
+	--tracking-heading: 0em;
 }
 
 html[data-theme="dark"] {
@@ -58,6 +65,14 @@ body {
 	font-size: 16px;
 	line-height: 1.6;
 	-webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+	font-kerning: normal;
+	font-optical-sizing: auto;
+	text-rendering: optimizeLegibility;
 }
 
 button,
@@ -142,6 +157,10 @@ img {
 	display: flex;
 	align-items: center;
 	gap: clamp(24px, 4vw, 64px);
+}
+
+.home-nav {
+	gap: clamp(14px, 2.4vw, 38px);
 }
 
 .desktop-nav a {
@@ -275,7 +294,7 @@ img {
 	margin: 0;
 	font-size: clamp(4.7rem, 10.4vw, 10.5rem);
 	font-weight: 900;
-	letter-spacing: -0.085em;
+	letter-spacing: var(--tracking-display);
 	line-height: 0.73;
 }
 
@@ -493,7 +512,7 @@ img {
 	margin: 0;
 	font-size: clamp(3.1rem, 7.5vw, 8rem);
 	font-weight: 850;
-	letter-spacing: -0.07em;
+	letter-spacing: var(--tracking-display);
 	line-height: 0.9;
 }
 
@@ -546,7 +565,7 @@ img {
 	margin: 0;
 	font-size: clamp(3.2rem, 7vw, 7.8rem);
 	font-weight: 850;
-	letter-spacing: -0.07em;
+	letter-spacing: var(--tracking-display);
 	line-height: 0.88;
 }
 
@@ -677,7 +696,7 @@ img {
 	margin: 0;
 	font-size: clamp(2.5rem, 5vw, 5.4rem);
 	font-weight: 850;
-	letter-spacing: -0.065em;
+	letter-spacing: var(--tracking-display);
 	line-height: 0.9;
 }
 
@@ -834,7 +853,7 @@ img {
 	margin: 0;
 	font-size: clamp(4.2rem, 11vw, 11rem);
 	font-weight: 900;
-	letter-spacing: -0.09em;
+	letter-spacing: var(--tracking-display);
 	line-height: 0.82;
 }
 
@@ -1007,6 +1026,16 @@ img {
 	.desktop-nav a {
 		font-size: 0.58rem;
 		letter-spacing: 0.13em;
+	}
+
+	.home-nav {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 12px 8px;
+	}
+
+	.home-nav a {
+		text-align: center;
 	}
 
 	.header-controls {

@@ -1,0 +1,227 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	entry: CollectionEntry<'library'>;
+	lang: 'zh' | 'en';
+}
+
+const { entry, lang } = Astro.props;
+const { data } = entry;
+const isZh = lang === 'zh';
+const t = (zh: string, en: string) => (isZh ? zh : en);
+const typeLabels = {
+	movie: t('電影', 'MOVIE'),
+	series: t('系列', 'SERIES'),
+	album: t('專輯', 'ALBUM'),
+	ep: 'EP',
+	single: t('單曲', 'SINGLE'),
+	song: t('歌曲', 'SONG'),
+};
+const statusLabels = {
+	watching: t('觀看中', 'WATCHING'),
+	watched: t('已看完', 'WATCHED'),
+	listened: t('已聽過', 'LISTENED'),
+	favorite: t('最愛歌曲', 'FAVORITE'),
+	saved: t('已收藏', 'SAVED'),
+	demo: t('示例', 'DEMO'),
+};
+const initials = data.title
+	.split(/[\s:：]+/)
+	.map((part) => part[0])
+	.filter(Boolean)
+	.slice(0, 3)
+	.join('')
+	.toUpperCase();
+const typeLabel = data.releaseType ? typeLabels[data.releaseType] : data.kind.toUpperCase();
+const cardHref = data.detailPath ?? data.externalUrl;
+const isExternal = Boolean(data.externalUrl && !data.detailPath);
+const CardTag = cardHref ? 'a' : 'article';
+const linkProps = cardHref
+	? { href: cardHref, target: isExternal ? '_blank' : undefined, rel: isExternal ? 'noreferrer' : undefined }
+	: {};
+const cardLabel = cardHref
+	? t(`閱讀《${data.title}》的內容`, `Open ${data.title}`)
+	: undefined;
+---
+
+<CardTag class="library-card" aria-label={cardLabel} {...linkProps}>
+	<div class:list={['library-artwork', data.coverTheme, data.kind === 'music' && 'square', data.coverImage && 'has-image']}>
+		{data.coverImage && <img src={data.coverImage} alt="" loading="lazy" decoding="async" />}
+		<span class="art-type">{data.platform ?? typeLabel}</span>
+		<span class="art-initials" aria-hidden="true">{initials}</span>
+		<span class="art-caption">{data.title}</span>
+	</div>
+	<div class="library-card-copy">
+		<div class="library-card-meta">
+			<span>{statusLabels[data.status]}</span>
+			<span>{data.duration ?? data.releaseYear}</span>
+		</div>
+		<h3>{data.title}</h3>
+		{data.secondaryTitle && <p class="secondary-title">{data.secondaryTitle}</p>}
+		<p>{data.creator}</p>
+		{data.album && <p class="album-title">{data.album}</p>}
+		{data.progress && <span class="progress">{data.progress}</span>}
+	</div>
+</CardTag>
+
+<style>
+	.library-card {
+		display: block;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	a.library-card .library-artwork {
+		transition: transform 220ms ease, box-shadow 220ms ease;
+	}
+
+	a.library-card:hover .library-artwork,
+	a.library-card:focus-visible .library-artwork {
+		transform: translateY(-6px);
+		box-shadow: 0 18px 34px rgba(0, 0, 0, 0.18);
+	}
+
+	.library-artwork {
+		position: relative;
+		display: flex;
+		aspect-ratio: 2 / 3;
+		min-height: 0;
+		flex-direction: column;
+		justify-content: space-between;
+		overflow: hidden;
+		padding: clamp(18px, 2vw, 28px);
+		border: 1px solid rgba(255, 255, 255, 0.24);
+		color: #f7f4ea;
+		isolation: isolate;
+	}
+
+	.library-artwork::before,
+	.library-artwork::after {
+		position: absolute;
+		content: "";
+		z-index: -1;
+	}
+
+	.library-artwork img {
+		position: absolute;
+		inset: 0;
+		z-index: -2;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.library-artwork.has-image::before {
+		background: linear-gradient(180deg, rgba(8, 13, 10, 0.35), transparent 35%, rgba(8, 13, 10, 0.72));
+	}
+
+	.library-artwork.has-image .art-initials {
+		opacity: 0;
+	}
+
+	.library-artwork::before {
+		inset: 0;
+		background: linear-gradient(150deg, transparent 28%, rgba(255, 255, 255, 0.12), transparent 72%);
+	}
+
+	.library-artwork::after {
+		width: 76%;
+		aspect-ratio: 1;
+		right: -24%;
+		bottom: -16%;
+		border: 1px solid rgba(255, 255, 255, 0.32);
+		border-radius: 50%;
+		box-shadow: 0 0 0 24px rgba(255, 255, 255, 0.06), 0 0 0 58px rgba(255, 255, 255, 0.035);
+	}
+
+	.library-artwork.square {
+		aspect-ratio: 1;
+	}
+
+	.cosmos { background: radial-gradient(circle at 70% 24%, #7ea7d8 0 2%, transparent 3%), radial-gradient(circle at 30% 60%, #be8664 0, transparent 35%), linear-gradient(145deg, #101832, #263d67 58%, #c29370); }
+	.sand { background: radial-gradient(circle at 74% 30%, #f3c26e 0, transparent 22%), linear-gradient(155deg, #d7a14e, #77512d 54%, #281d18); }
+	.ember { background: radial-gradient(circle at 25% 70%, #ffbb56 0, transparent 24%), linear-gradient(140deg, #421615, #a33323 56%, #171010); }
+	.violet { background: radial-gradient(circle at 70% 28%, #d3b9ff 0, transparent 24%), linear-gradient(155deg, #352250, #7558a8 54%, #161326); }
+	.mono { background: linear-gradient(35deg, transparent 46%, rgba(255,255,255,.22) 47% 52%, transparent 53%), linear-gradient(145deg, #0f1113, #5a5f62 54%, #d4d1c8); }
+	.neon { background: radial-gradient(circle at 62% 72%, #ee306d 0, transparent 28%), linear-gradient(145deg, #170c29, #4a1761 48%, #127d88); }
+
+	.art-type,
+	.art-caption {
+		font-size: 0.56rem;
+		font-weight: 850;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+	}
+
+	.art-initials {
+		align-self: center;
+		font-family: var(--serif);
+		font-size: clamp(3.4rem, 7vw, 6.8rem);
+		font-style: italic;
+		line-height: 1;
+		text-shadow: 0 4px 22px rgba(0, 0, 0, 0.24);
+	}
+
+	.art-caption {
+		max-width: 90%;
+		line-height: 1.45;
+	}
+
+	.library-card-copy {
+		padding: 18px 2px 0;
+	}
+
+	.library-card-meta {
+		display: flex;
+		justify-content: space-between;
+		gap: 12px;
+		color: var(--accent-text);
+		font-size: 0.56rem;
+		font-weight: 850;
+		letter-spacing: 0.14em;
+	}
+
+	.library-card h3 {
+		margin: 11px 0 3px;
+		font-family: var(--serif);
+		font-size: clamp(1.2rem, 2vw, 1.65rem);
+		font-weight: 600;
+		line-height: 1.12;
+		text-wrap: balance;
+	}
+
+	.library-card p {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.76rem;
+	}
+
+	.library-card .album-title {
+		margin-top: 5px;
+		font-family: var(--serif);
+		font-style: italic;
+	}
+
+	.library-card .secondary-title {
+		margin-bottom: 6px;
+		font-size: 0.65rem;
+		font-weight: 750;
+		letter-spacing: 0.04em;
+	}
+
+	.progress {
+		display: inline-block;
+		margin-top: 13px;
+		padding: 4px 8px;
+		color: var(--forest-deep);
+		background: var(--acid);
+		font-size: 0.57rem;
+		font-weight: 850;
+		letter-spacing: 0.1em;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		a.library-card .library-artwork { transition: none; }
+	}
+</style>
