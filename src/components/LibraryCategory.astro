@@ -1,0 +1,75 @@
+---
+import { getCollection } from 'astro:content';
+import ArticleLayout from '../layouts/ArticleLayout.astro';
+import LibraryCard from './LibraryCard.astro';
+
+type Category = 'movies' | 'series' | 'music';
+interface Props { lang: 'zh' | 'en'; category: Category; }
+const { lang, category } = Astro.props;
+const isZh = lang === 'zh';
+const t = (zh: string, en: string) => (isZh ? zh : en);
+const categories = {
+	music: { title: t('音樂', 'Music'), description: t('聽過並收藏的專輯、EP 與單曲，依最近添加排序。', 'Albums, EPs, and singles I have listened to and saved, sorted by most recently added.') },
+	movies: { title: t('電影', 'Movies'), description: t('看過與想記住的電影，依最近添加排序。', 'Films I have watched and want to remember, sorted by most recently added.') },
+	series: { title: t('電視劇／動畫', 'Series / Anime'), description: t('追過的劇集與動畫，依最近添加排序。', 'Series and anime I have followed, sorted by most recently added.') },
+};
+const current = categories[category];
+const allEntries = await getCollection('library', ({ data }) => data.lang === lang && data.kind === category);
+const formalEntries = allEntries.filter((entry) => !entry.data.demo);
+const entries = (formalEntries.length > 0 ? formalEntries : allEntries).sort((a, b) => {
+	if (a.data.listOrder !== undefined || b.data.listOrder !== undefined) {
+		return (a.data.listOrder ?? Number.MAX_SAFE_INTEGER) - (b.data.listOrder ?? Number.MAX_SAFE_INTEGER);
+	}
+	return b.data.addedAt.valueOf() - a.data.addedAt.valueOf();
+});
+---
+
+<ArticleLayout
+	lang={lang}
+	title={current.title}
+	description={current.description}
+	canonicalPath={`/${lang}/library/${category}/`}
+	translationPath={`/${isZh ? 'en' : 'zh'}/library/${category}/`}
+	section="library"
+>
+	<main class="category-main">
+		<header class="category-hero">
+			<a href={`/${lang}/library/`} data-reveal="left">← {t('返回收藏庫', 'BACK TO LIBRARY')}</a>
+			<div class="category-heading">
+				<div class="category-meta" data-reveal><span>{t('個人選藏', 'PERSONAL LIBRARY')}</span><span>{category === 'music' ? t('最愛列表順序', 'FAVORITES ORDER') : t('最近添加 ↓', 'RECENTLY ADDED ↓')}</span></div>
+				<h1 data-reveal style="--reveal-delay: 60ms;">{current.title}</h1>
+				<p data-reveal style="--reveal-delay: 120ms;">{current.description}</p>
+			</div>
+		</header>
+
+		<nav class="category-tabs" aria-label={t('收藏庫分類', 'Library categories')}>
+			{(Object.keys(categories) as Category[]).map((key) => <a href={`/${lang}/library/${key}/`} aria-current={key === category ? 'page' : undefined}>{categories[key].title}</a>)}
+		</nav>
+
+		<section class="category-list" aria-label={current.title}>
+			<div class="category-summary"><span>{String(entries.length).padStart(2, '0')} {t('項收藏', 'ITEMS')}</span><span>{category === 'music' ? t('APPLE MUSIC 最愛歌曲', 'APPLE MUSIC FAVORITE SONGS') : t('依最近添加排序', 'SORTED BY DATE ADDED')}</span></div>
+			<div class="category-grid">
+				{entries.map((entry, index) => <div class="category-item" data-reveal style={`--reveal-delay: ${(index % 4) * 60}ms;`}><LibraryCard entry={entry} lang={lang} /></div>)}
+			</div>
+		</section>
+	</main>
+</ArticleLayout>
+
+<style>
+	.category-main { min-height: calc(100vh - 84px); }
+	.category-hero { display: grid; grid-template-columns: minmax(180px, .36fr) minmax(0, 1fr); gap: 32px clamp(40px, 8vw, 130px); padding: clamp(70px, 9vw, 130px) clamp(24px, 7vw, 112px); border-bottom: 1px solid var(--line); }
+	.category-hero > a { align-self: start; padding-top: 14px; color: var(--accent-text); font-size: .6rem; font-weight: 850; letter-spacing: .15em; text-decoration: none; }
+	.category-meta { display: flex; flex-wrap: wrap; gap: 10px 20px; color: var(--accent-text); font-size: .58rem; font-weight: 850; letter-spacing: .16em; }
+	.category-meta span:first-child { padding: 5px 8px; color: var(--forest-deep); background: var(--acid); }
+	.category-heading h1 { margin: 24px 0 0; font-size: clamp(3.6rem, 8.5vw, 8.5rem); font-weight: 900; letter-spacing: var(--tracking-display); line-height: .88; text-wrap: balance; }
+	.category-heading > p { max-width: 680px; margin: 34px 0 0; font-family: var(--serif); font-size: clamp(1.05rem, 1.7vw, 1.35rem); line-height: 1.7; }
+	.category-tabs { display: flex; gap: 8px; overflow-x: auto; padding: 26px clamp(24px, 7vw, 112px); border-bottom: 1px solid var(--line); }
+	.category-tabs a { padding: 9px 14px; border: 1px solid var(--line-strong); font-size: .6rem; font-weight: 850; letter-spacing: .13em; text-decoration: none; white-space: nowrap; }
+	.category-tabs a[aria-current="page"] { color: var(--paper); background: var(--ink); }
+	.category-list { padding: clamp(56px, 7vw, 96px) clamp(24px, 7vw, 112px) clamp(80px, 10vw, 140px); }
+	.category-summary { display: flex; justify-content: space-between; gap: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--line-strong); color: var(--muted); font-size: .58rem; font-weight: 850; letter-spacing: .15em; }
+	.category-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(34px, 5vw, 72px) clamp(18px, 2.5vw, 38px); padding-top: 38px; }
+	@media (max-width: 1000px) { .category-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+	@media (max-width: 720px) { .category-hero { grid-template-columns: 1fr; } .category-hero > a { padding-top: 0; } .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+	@media (max-width: 440px) { .category-grid { grid-template-columns: 1fr; } .category-item { width: min(100%, 310px); } .category-summary { flex-direction: column; gap: 4px; } }
+</style>

@@ -57,4 +57,33 @@ const reviews = defineCollection({
 	}),
 });
 
-export const collections = { articles, reviews };
+const library = defineCollection({
+	loader: glob({ base: './src/content/library', pattern: '**/*.{md,mdx}' }),
+	schema: z.object({
+		title: z.string(),
+		secondaryTitle: z.string().optional(),
+		creator: z.string(),
+		description: z.string(),
+		lang: z.enum(['zh', 'en']),
+		librarySlug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+		translationKey: z.string(),
+		kind: z.enum(['movies', 'series', 'music']),
+		releaseType: z.enum(['movie', 'series', 'album', 'ep', 'single', 'song']).optional(),
+		releaseYear: z.number().int().min(1888),
+		addedAt: z.coerce.date(),
+		status: z.enum(['watching', 'watched', 'listened', 'favorite', 'saved', 'demo']),
+		progress: z.string().optional(),
+		rating: z.number().min(0).max(10).optional(),
+		album: z.string().optional(),
+		duration: z.string().optional(),
+		platform: z.string().optional(),
+		coverImage: z.string().url().optional(),
+		externalUrl: z.string().url().optional(),
+		listOrder: z.number().int().positive().optional(),
+		coverTheme: z.enum(['cosmos', 'sand', 'ember', 'violet', 'mono', 'neon']),
+		detailPath: z.string().startsWith('/').optional(),
+		demo: z.boolean().default(true),
+	}),
+});
+
+export const collections = { articles, reviews, library };

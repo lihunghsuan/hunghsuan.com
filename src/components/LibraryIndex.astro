@@ -1,0 +1,175 @@
+---
+import { getCollection } from 'astro:content';
+import ArticleLayout from '../layouts/ArticleLayout.astro';
+import LibraryCard from './LibraryCard.astro';
+
+interface Props {
+	lang: 'zh' | 'en';
+}
+
+const { lang } = Astro.props;
+const isZh = lang === 'zh';
+const t = (zh: string, en: string) => (isZh ? zh : en);
+const entries = (await getCollection('library', ({ data }) => data.lang === lang)).sort((a, b) => {
+	if (a.data.listOrder !== undefined || b.data.listOrder !== undefined) {
+		return (a.data.listOrder ?? Number.MAX_SAFE_INTEGER) - (b.data.listOrder ?? Number.MAX_SAFE_INTEGER);
+	}
+	return b.data.addedAt.valueOf() - a.data.addedAt.valueOf();
+});
+const sections = [
+	{ key: 'music', number: '01', title: t('音樂', 'MUSIC'), subtitle: t('Apple Music 最愛歌曲', 'Apple Music Favorite Songs') },
+	{ key: 'movies', number: '02', title: t('電影', 'MOVIES'), subtitle: t('最近添加的電影', 'Recently added films') },
+	{ key: 'series', number: '03', title: t('電視劇／動畫', 'SERIES / ANIME'), subtitle: t('最近添加的劇集與動畫', 'Recently added shows and anime') },
+] as const;
+const title = t('收藏庫', 'Library');
+const description = t(
+	'把喜歡的音樂、看過的電影，以及追過的電視劇與動畫收藏在一起。',
+	'A home for the music I love, the films I have watched, and the series and anime I have followed.',
+);
+---
+
+<ArticleLayout
+	lang={lang}
+	title={title}
+	description={description}
+	canonicalPath={`/${lang}/library/`}
+	translationPath={`/${isZh ? 'en' : 'zh'}/library/`}
+	section="library"
+>
+	<main class="library-main">
+		<header class="library-hero">
+			<div class="library-kicker" data-reveal="left">
+				<span>06</span>
+				<span>{t('個人收藏', 'PERSONAL ARCHIVE')}</span>
+			</div>
+			<div class="library-heading">
+				<div class="demo-label" data-reveal>{t('個人選藏', 'CURATED LIBRARY')}</div>
+				<h1 data-reveal style="--reveal-delay: 60ms;">{title}</h1>
+				<p data-reveal style="--reveal-delay: 120ms;">{description}</p>
+			</div>
+		</header>
+
+		{
+			sections.map((section) => {
+				const allSectionEntries = entries.filter((entry) => entry.data.kind === section.key);
+				const formalEntries = allSectionEntries.filter((entry) => !entry.data.demo);
+				const sectionEntries = formalEntries.length > 0 ? formalEntries : allSectionEntries;
+				return (
+					<section class="library-section" aria-labelledby={`library-${section.key}`}>
+						<header class="section-heading" data-reveal>
+							<div class="section-title-group">
+								<span>{section.number}</span>
+								<div>
+									<h2 id={`library-${section.key}`}>{section.title}</h2>
+									<p>{section.subtitle}</p>
+								</div>
+							</div>
+							<div class="section-actions">
+								<div class="rail-controls" aria-label={t(`${section.title}捲動控制`, `${section.title} scroll controls`)}>
+									<button type="button" data-rail-control data-direction="-1" data-target={`rail-${section.key}`} aria-label={t('向左捲動', 'Scroll left')}>←</button>
+									<button type="button" data-rail-control data-direction="1" data-target={`rail-${section.key}`} aria-label={t('向右捲動', 'Scroll right')}>→</button>
+								</div>
+								<a href={`/${lang}/library/${section.key}/`}>{t('查看全部', 'VIEW ALL')} ↗</a>
+							</div>
+						</header>
+
+						<div class="library-rail" id={`rail-${section.key}`}>
+							{sectionEntries.map((entry) => <div class="rail-item"><LibraryCard entry={entry} lang={lang} /></div>)}
+						</div>
+					</section>
+				);
+			})
+		}
+	</main>
+</ArticleLayout>
+
+<script>
+	document.querySelectorAll<HTMLButtonElement>('[data-rail-control]').forEach((button) => {
+		button.addEventListener('click', () => {
+			const rail = document.getElementById(button.dataset.target ?? '');
+			if (!rail) return;
+			const direction = Number(button.dataset.direction ?? 1);
+			rail.scrollBy({ left: direction * Math.min(rail.clientWidth * 0.82, 720), behavior: 'smooth' });
+		});
+	});
+
+	document.querySelectorAll<HTMLElement>('.library-rail').forEach((rail) => {
+		rail.addEventListener(
+			'wheel',
+			(event) => {
+				if (event.ctrlKey || rail.scrollWidth <= rail.clientWidth) return;
+
+				const wheelDelta =
+					Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+				if (wheelDelta === 0) return;
+
+				const multiplier =
+					event.deltaMode === WheelEvent.DOM_DELTA_LINE
+						? 24
+						: event.deltaMode === WheelEvent.DOM_DELTA_PAGE
+							? rail.clientWidth
+							: 1;
+
+				event.preventDefault();
+				rail.scrollLeft += wheelDelta * multiplier;
+			},
+			{ passive: false },
+		);
+	});
+</script>
+
+<style>
+	.library-main { min-height: calc(100vh - 84px); }
+	.library-hero {
+		display: grid;
+		grid-template-columns: minmax(180px, 0.38fr) minmax(0, 1fr);
+		gap: 32px clamp(40px, 8vw, 130px);
+		padding: clamp(70px, 9vw, 130px) clamp(24px, 7vw, 112px);
+		border-bottom: 1px solid var(--line);
+	}
+	.library-kicker, .section-title-group > span, .demo-label {
+		color: var(--accent-text);
+		font-size: 0.6rem;
+		font-weight: 850;
+		letter-spacing: 0.17em;
+		text-transform: uppercase;
+	}
+	.library-kicker { display: flex; align-items: center; align-self: start; gap: 14px; padding-top: 14px; }
+	.library-kicker > span:first-child, .section-title-group > span {
+		display: grid;
+		width: 29px;
+		height: 29px;
+		place-items: center;
+		border: 1px solid currentColor;
+		border-radius: 50%;
+		font-family: var(--serif);
+		font-style: italic;
+		letter-spacing: 0;
+	}
+	.demo-label { display: inline-block; padding: 6px 9px; color: var(--forest-deep); background: var(--acid); }
+	.library-heading h1 { margin: 22px 0 0; font-size: clamp(4.1rem, 10vw, 9.5rem); font-weight: 900; letter-spacing: var(--tracking-display); line-height: .84; }
+	.library-heading > p { max-width: 760px; margin: 38px 0 0; font-family: var(--serif); font-size: clamp(1.08rem, 1.8vw, 1.45rem); line-height: 1.7; }
+	.library-section { padding: clamp(68px, 8vw, 112px) 0 clamp(70px, 9vw, 126px) clamp(24px, 7vw, 112px); border-bottom: 1px solid var(--line); }
+	.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 28px; margin-right: clamp(24px, 7vw, 112px); padding-bottom: 24px; border-bottom: 1px solid var(--line-strong); }
+	.section-title-group { display: flex; align-items: center; gap: 18px; }
+	.section-title-group h2 { margin: 0; font-size: clamp(1.8rem, 4vw, 4rem); letter-spacing: var(--tracking-heading); line-height: 1; }
+	.section-title-group p { margin: 8px 0 0; color: var(--muted); font-family: var(--serif); font-size: .9rem; }
+	.section-actions { display: flex; align-items: center; gap: 20px; }
+	.section-actions > a { border-bottom: 1px solid currentColor; font-size: .62rem; font-weight: 850; letter-spacing: .14em; text-decoration: none; white-space: nowrap; }
+	.rail-controls { display: flex; }
+	.rail-controls button { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid var(--line-strong); color: var(--ink); background: transparent; cursor: pointer; }
+	.rail-controls button + button { border-left: 0; }
+	.rail-controls button:hover, .rail-controls button:focus-visible { color: var(--paper); background: var(--ink); }
+	.library-rail { display: flex; gap: clamp(18px, 2.2vw, 34px); overflow-x: auto; padding: 38px clamp(24px, 7vw, 112px) 18px 0; overscroll-behavior-inline: contain; scroll-behavior: smooth; scroll-snap-type: x mandatory; scrollbar-color: var(--line-strong) transparent; scrollbar-width: thin; }
+	.rail-item { flex: 0 0 clamp(210px, 24vw, 330px); scroll-snap-align: start; }
+	.library-rail:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+	@media (max-width: 760px) {
+		.library-hero { grid-template-columns: 1fr; }
+		.library-kicker { padding-top: 0; }
+		.library-heading h1 { font-size: clamp(4rem, 22vw, 7rem); }
+		.section-heading { align-items: start; flex-direction: column; }
+		.section-actions { width: 100%; justify-content: space-between; }
+		.rail-item { flex-basis: min(72vw, 270px); }
+	}
+	@media (max-width: 480px) { .rail-controls { display: none; } }
+</style>
