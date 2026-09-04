@@ -999,7 +999,7 @@ img {
 	}
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
 	.site-header {
 		display: grid;
 		grid-template-columns: auto 1fr;
@@ -1028,6 +1028,18 @@ img {
 		letter-spacing: 0.13em;
 	}
 
+	.header-controls {
+		justify-self: end;
+	}
+
+	.theme-control button {
+		min-width: 30px;
+		padding: 0 6px;
+	}
+}
+
+@media (max-width: 640px) {
+
 	.home-nav {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1036,15 +1048,6 @@ img {
 
 	.home-nav a {
 		text-align: center;
-	}
-
-	.header-controls {
-		justify-self: end;
-	}
-
-	.theme-control button {
-		min-width: 30px;
-		padding: 0 6px;
 	}
 
 	.hero {

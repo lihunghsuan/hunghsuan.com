@@ -31,6 +31,8 @@ const entries = (formalEntries.length > 0 ? formalEntries : allEntries).sort((a,
 	canonicalPath={`/${lang}/library/${category}/`}
 	translationPath={`/${isZh ? 'en' : 'zh'}/library/${category}/`}
 	section="library"
+	socialImagePath={`/og/library-${lang}.jpg`}
+	socialImageAlt={t('Hunghsuan 個人收藏庫', 'Hunghsuan Personal Library')}
 >
 	<main class="category-main">
 		<header class="category-hero">

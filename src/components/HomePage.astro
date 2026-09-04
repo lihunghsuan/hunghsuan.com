@@ -24,7 +24,7 @@ const siteDescription = t(
 const canonicalURL = new URL(`/${lang}/`, Astro.site);
 const chineseURL = new URL('/zh/', Astro.site);
 const englishURL = new URL('/en/', Astro.site);
-const defaultURL = new URL('/', Astro.site);
+const defaultURL = englishURL;
 const socialImageURL = new URL('/og.png', Astro.site);
 const structuredData = {
 	'@context': 'https://schema.org',
@@ -603,7 +603,10 @@ const featuredVideos = [
 
 			languageLink?.addEventListener('click', () => {
 				try {
-					localStorage.setItem('language-preference', languageLink.dataset.language);
+					const language = languageLink.dataset.language;
+					if (language !== 'zh' && language !== 'en') return;
+					localStorage.setItem('language-preference', language);
+					document.cookie = `language-preference=${language}; Max-Age=31536000; Path=/; SameSite=Lax`;
 				} catch {}
 			});
 		</script>
