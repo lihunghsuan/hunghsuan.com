@@ -41,6 +41,8 @@ const dateFormatter = new Intl.DateTimeFormat(isZh ? 'zh-TW' : 'en-US', {
 	publishedAt={data.publishedAt}
 	updatedAt={data.updatedAt}
 	draft={data.draft}
+	socialImagePath={`/og/articles-${data.lang}.jpg`}
+	socialImageAlt={t('Hunghsuan 文章與攻略', 'Hunghsuan Articles & Guides')}
 >
 	<main class="article-main">
 		<article>

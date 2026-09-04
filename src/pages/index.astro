@@ -11,7 +11,7 @@ const englishURL = new URL('/en/', Astro.site);
 		<meta name="robots" content="noindex, follow" />
 		<link rel="alternate" hreflang="zh-Hant" href={chineseURL} />
 		<link rel="alternate" hreflang="en" href={englishURL} />
-		<link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site)} />
+		<link rel="alternate" hreflang="x-default" href={englishURL} />
 		<title>Hunghsuan — Choose your language</title>
 		<script is:inline>
 			(() => {

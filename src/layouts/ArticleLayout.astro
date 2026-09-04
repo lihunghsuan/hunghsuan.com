@@ -13,6 +13,8 @@ interface Props {
 	updatedAt?: Date;
 	draft?: boolean;
 	section?: 'articles' | 'reviews' | 'library';
+	socialImagePath?: string;
+	socialImageAlt?: string;
 }
 
 const {
@@ -26,6 +28,8 @@ const {
 	updatedAt,
 	draft = false,
 	section = 'articles',
+	socialImagePath = '/og.png',
+	socialImageAlt = title,
 } = Astro.props;
 const isZh = lang === 'zh';
 const alternateLang = isZh ? 'en' : 'zh';
@@ -33,7 +37,7 @@ const t = (zh: string, en: string) => (isZh ? zh : en);
 const canonicalURL = new URL(canonicalPath, Astro.site);
 const translationURL = translationPath ? new URL(translationPath, Astro.site) : undefined;
 const languagePath = translationPath ?? `/${alternateLang}/${section}/`;
-const socialImageURL = new URL('/og.png', Astro.site);
+const socialImageURL = new URL(socialImagePath, Astro.site);
 const fullTitle = `${title} — Hunghsuan`;
 const structuredData =
 	pageType === 'article'
@@ -103,6 +107,9 @@ const structuredData =
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalURL} />
 		<meta property="og:image" content={socialImageURL} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={socialImageAlt} />
 		<meta property="og:locale" content={isZh ? 'zh_TW' : 'en_US'} />
 		{
 			pageType === 'article' && publishedAt && (
@@ -119,6 +126,7 @@ const structuredData =
 		<meta name="twitter:title" content={fullTitle} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={socialImageURL} />
+		<meta name="twitter:image:alt" content={socialImageAlt} />
 
 		<title>{fullTitle}</title>
 		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
@@ -258,7 +266,10 @@ const structuredData =
 
 			languageLink?.addEventListener('click', () => {
 				try {
-					localStorage.setItem('language-preference', languageLink.dataset.language);
+					const language = languageLink.dataset.language;
+					if (language !== 'zh' && language !== 'en') return;
+					localStorage.setItem('language-preference', language);
+					document.cookie = `language-preference=${language}; Max-Age=31536000; Path=/; SameSite=Lax`;
 				} catch {}
 			});
 		</script>
