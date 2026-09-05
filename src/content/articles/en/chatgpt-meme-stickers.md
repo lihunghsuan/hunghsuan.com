@@ -85,8 +85,6 @@ This follows OpenAI's advice to be specific about what should change and what sh
 
 ## Save them and add them to your chat app
 
-If you downloaded the whole grid, crop it into individual stickers first, then add them using your chat app's sticker tools. Keep the transparent background when saving.
-
 My favorite part of this is getting to be my own reaction meme.
 
 The next time I don't know what to say, a sticker of my own blank stare might do the job.

@@ -85,8 +85,6 @@ Create a single square(1:1) transparent sticker sheet with nine distinct sticker
 
 ## 下載後，添加到你的聊天軟體就可以使用啦～
 
-如果下載的是整張九宮格，先裁成單張貼圖，再依聊天軟體的方式加入；存檔時記得保留透明背景。
-
 我覺得這個玩法最有趣的地方，是把自己變成聊天時的反應。
 
 下次不知道怎麼回覆，也許一張自己的「無言臉」就夠了。
