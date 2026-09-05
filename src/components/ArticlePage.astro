@@ -207,10 +207,75 @@ const dateFormatter = new Intl.DateTimeFormat(isZh ? 'zh-TW' : 'en-US', {
 		margin: 2.5em auto;
 	}
 
+	.article-body :global(.article-figure) {
+		margin: 2.5em 0;
+	}
+
+	.article-body :global(.article-figure img) {
+		display: block;
+		width: 100%;
+		height: auto;
+		margin: 0 auto;
+	}
+
+	.article-body :global(.article-screenshot) {
+		max-width: 620px;
+		margin-inline: auto;
+	}
+
+	.article-body :global(figcaption) {
+		margin-top: 12px;
+		color: var(--muted);
+		font-family: var(--sans);
+		font-size: 0.85rem;
+		line-height: 1.65;
+	}
+
+	.article-body :global(.article-sticker-gallery) {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 24px;
+		margin: 2.5em 0;
+	}
+
+	.article-body :global(.article-sticker-gallery figure) {
+		min-width: 0;
+		margin: 0;
+		text-align: center;
+	}
+
+	.article-body :global(.article-sticker-gallery img) {
+		aspect-ratio: 1;
+		object-fit: contain;
+	}
+
+	.article-body :global(pre) {
+		max-width: 100%;
+		padding: 24px;
+		border: 1px solid var(--line);
+		white-space: pre-wrap;
+		overflow-wrap: anywhere;
+		line-height: 1.7;
+	}
+
 	.article-body :global(code) {
 		padding: 0.12em 0.32em;
 		background: var(--paper-deep);
 		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 		font-size: 0.88em;
+	}
+
+	.article-body :global(pre code) {
+		padding: 0;
+		background: transparent;
+	}
+
+	@media (max-width: 540px) {
+		.article-body :global(.article-sticker-gallery) {
+			grid-template-columns: minmax(0, 1fr);
+			max-width: 300px;
+			margin-inline: auto;
+			gap: 32px;
+		}
 	}
 </style>
