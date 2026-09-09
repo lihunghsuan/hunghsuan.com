@@ -1,6 +1,6 @@
 ---
 title: 塵大師
-creator: Eason Chan
+creator: 陳奕迅
 description: Apple Music「最愛歌曲」中的收藏。
 lang: zh
 librarySlug: chen-da-shi
