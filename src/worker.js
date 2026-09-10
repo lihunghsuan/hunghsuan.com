@@ -5,7 +5,7 @@ const contentSecurityPolicy = [
 	"font-src 'self' data:",
 	"form-action 'self'",
 	"frame-ancestors 'none'",
-	"img-src 'self' data: https://i.ytimg.com https://*.mzstatic.com https://*.nflximg.net https://i0.hdslb.com",
+	"img-src 'self' data: https://i.ytimg.com https://*.mzstatic.com https://*.nflximg.net https://i0.hdslb.com https://m.media-amazon.com",
 	"media-src 'self'",
 	"object-src 'none'",
 	"script-src 'self' 'unsafe-inline'",

@@ -2,7 +2,7 @@
 title: "I, Robot"
 secondaryTitle: "我，機器人"
 creator: Alex Proyas
-description: "From my Bilibili watchlist. Watched to 1:46:17."
+description: "I, Robot (2004)."
 lang: en
 librarySlug: i-robot
 translationKey: i-robot
@@ -11,11 +11,8 @@ releaseType: movie
 releaseYear: 2004
 addedAt: 2026-09-10
 status: watching
-progress: Watched to 1:46:17
-platform: Bilibili
-coverImage: https://i0.hdslb.com/bfs/bangumi/image/9a3335d84da2fdc3070e72e4f764c4eecacb7add.png
-externalUrl: https://www.bilibili.com/bangumi/play/ss46317
 coverTheme: mono
+coverImage: https://m.media-amazon.com/images/M/MV5BZDdhNTY3YTgtYmQwMC00MjM1LTgzYzMtMGM1N2E0NWM1NDlkXkEyXkFqcGc@._V1_QL75_UX600_.jpg
+externalUrl: https://www.imdb.com/title/tt0343818/
 demo: false
 ---
-

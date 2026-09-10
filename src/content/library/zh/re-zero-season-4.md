@@ -2,7 +2,7 @@
 title: Re:從零開始的異世界生活 第四季
 secondaryTitle: "Re:Zero − Starting Life in Another World Season 4"
 creator: WHITE FOX
-description: 第四季觀看中，目前看到第 81 話。
+description: "Re: Zero - Starting Life in Another World，第 4 季。"
 lang: zh
 librarySlug: re-zero-season-4
 translationKey: re-zero-season-4
@@ -11,8 +11,8 @@ releaseType: series
 releaseYear: 2026
 addedAt: 2026-09-03
 status: watching
-progress: 第 81 話
 coverTheme: violet
-externalUrl: https://re-zero-anime.jp/tv/
+coverImage: https://m.media-amazon.com/images/M/MV5BZWI4OTVkNDgtOTBmMC00M2I3LTk3NTctOWY3NmRkODIxMDViXkEyXkFqcGc@._V1_QL75_UX600_.jpg
+externalUrl: https://www.imdb.com/title/tt5607616/episodes/?season=4
 demo: false
 ---

@@ -48,20 +48,20 @@ const cardLabel = cardHref
 <CardTag class="library-card" aria-label={cardLabel} {...linkProps}>
 	<div class:list={['library-artwork', data.coverTheme, data.kind === 'music' && 'square', data.coverImage && 'has-image']}>
 		{data.coverImage && <img src={data.coverImage} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />}
-		<span class="art-type">{data.platform ?? typeLabel}</span>
+		{data.kind === 'music' && <span class="art-type">{data.platform ?? typeLabel}</span>}
 		<span class="art-initials" aria-hidden="true">{initials}</span>
 		<span class="art-caption">{data.title}</span>
 	</div>
 	<div class="library-card-copy">
 		<div class="library-card-meta">
-			<span>{statusLabels[data.status]}</span>
+			{data.kind === 'music' && <span>{statusLabels[data.status]}</span>}
 			<span>{data.duration ?? data.releaseYear}</span>
 		</div>
 		<h3>{data.title}</h3>
 		{data.secondaryTitle && <p class="secondary-title">{data.secondaryTitle}</p>}
 		<p>{data.creator}</p>
 		{data.album && <p class="album-title">{data.album}</p>}
-		{data.progress && <span class="progress">{data.progress}</span>}
+		{data.kind === 'music' && data.progress && <span class="progress">{data.progress}</span>}
 	</div>
 </CardTag>
 
