@@ -16,7 +16,7 @@ export default defineConfig({
 	},
 	integrations: [
 		sitemap({
-			filter: (page) => page !== 'https://hunghsuan.com/',
+			filter: (page) => page !== 'https://hunghsuan.com/' && !page.includes('/reviews/'),
 			i18n: {
 				defaultLocale: 'zh',
 				locales: {

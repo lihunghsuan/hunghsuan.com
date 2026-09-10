@@ -47,7 +47,7 @@ const cardLabel = cardHref
 
 <CardTag class="library-card" aria-label={cardLabel} {...linkProps}>
 	<div class:list={['library-artwork', data.coverTheme, data.kind === 'music' && 'square', data.coverImage && 'has-image']}>
-		{data.coverImage && <img src={data.coverImage} alt="" loading="lazy" decoding="async" />}
+		{data.coverImage && <img src={data.coverImage} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />}
 		<span class="art-type">{data.platform ?? typeLabel}</span>
 		<span class="art-initials" aria-hidden="true">{initials}</span>
 		<span class="art-caption">{data.title}</span>

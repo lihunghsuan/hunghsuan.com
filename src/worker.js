@@ -5,7 +5,7 @@ const contentSecurityPolicy = [
 	"font-src 'self' data:",
 	"form-action 'self'",
 	"frame-ancestors 'none'",
-	"img-src 'self' data: https://i.ytimg.com https://*.mzstatic.com https://*.nflximg.net",
+	"img-src 'self' data: https://i.ytimg.com https://*.mzstatic.com https://*.nflximg.net https://i0.hdslb.com",
 	"media-src 'self'",
 	"object-src 'none'",
 	"script-src 'self' 'unsafe-inline'",
@@ -76,6 +76,11 @@ function createRedirect(url, status, extraHeaders = {}) {
 export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
+		const legacyReview = url.pathname.match(/^\/(zh|en)\/reviews(?:\/(re-zero-season-4))?\/?$/);
+		if (legacyReview) {
+			url.pathname = `/${legacyReview[1]}/articles/${legacyReview[2] ? `${legacyReview[2]}/` : ''}`;
+			return createRedirect(url, 301);
+		}
 
 		if (url.hostname === 'www.hunghsuan.com') {
 			url.hostname = 'hunghsuan.com';

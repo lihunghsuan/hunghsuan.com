@@ -1,25 +1,13 @@
 ---
 title: Re:ZERO -Starting Life in Another World- Season 4
-originalTitle: Re:ゼロから始める異世界生活 4th season
 description: Episode 81 made Shaula’s attachment to her Master finally click for me, then ended on a huge Book of the Dead cliffhanger.
 lang: en
-reviewSlug: re-zero-season-4
 translationKey: re-zero-season-4
-format: series
-season: 4
-year: 2026
-status: watching
-latestEpisode:
-  number: 81
-  title: A Single-Minded Star
-  rating: 10
 publishedAt: 2026-09-02
 updatedAt: 2026-09-03
 draft: false
-sample: false
-spoiler: true
-officialUrl: https://re-zero-anime.jp/tv/
-externalReviews: []
+articleSlug: re-zero-season-4
+category: Reviews
 ---
 
 ## Spoiler-free thoughts
@@ -47,3 +35,4 @@ The episode ends just as Subaru finds his own Book of the Dead. Cutting away at 
 ## For now
 
 Season 4 is still airing, so I am not giving the whole season a rating yet. For Episode 81 alone, though, Shaula’s story and that final cliffhanger both landed perfectly. This episode is a full 10/10 for me.
+
