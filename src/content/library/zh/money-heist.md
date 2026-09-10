@@ -11,9 +11,8 @@ releaseType: series
 releaseYear: 2017
 addedAt: 2026-09-04
 status: saved
-platform: Netflix
-coverImage: "https://dnm.nflximg.net/api/v6/mAcAr9TxZIVbINe88xb3Teg5_OA/AAAABRVTg3NCFohfeJJFFt_Suon01WE9mTiRBJNgRZhKlYUjsuPGeqdspzzYd3Wsh3OtfDvqW2MLOtjcpL8lPqIb4FP0oa4QzUsMKLjo.jpg?r=3f5"
-externalUrl: https://www.netflix.com/title/80192098
 coverTheme: ember
+coverImage: https://m.media-amazon.com/images/M/MV5BODdiNWI5ZjgtY2RhZi00ODlmLTkyNDEtMzIyMTEyZDE2ZjNjXkEyXkFqcGc@._V1_QL75_UX600_.jpg
+externalUrl: https://www.imdb.com/title/tt6468322/
 demo: false
 ---

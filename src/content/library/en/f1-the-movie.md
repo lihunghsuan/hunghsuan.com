@@ -11,9 +11,8 @@ releaseType: movie
 releaseYear: 2025
 addedAt: 2026-09-04
 status: saved
-platform: Apple TV
-coverImage: https://is1-ssl.mzstatic.com/image/thumb/ASdVV2GRgaTHzil4yKXykA/600x900.jpg
-externalUrl: https://tv.apple.com/us/movie/f1-the-movie/umc.cmc.3t6dvnnr87zwd4wmvpdx5came
 coverTheme: mono
+coverImage: https://m.media-amazon.com/images/M/MV5BNGI0MDI4NjEtOWU3ZS00ODQyLWFhYTgtNGYxM2ZkM2Q2YjE3XkEyXkFqcGc@._V1_QL75_UX600_.jpg
+externalUrl: https://www.imdb.com/title/tt16311594/
 demo: false
 ---
