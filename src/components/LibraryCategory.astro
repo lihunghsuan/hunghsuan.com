@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import ArticleLayout from '../layouts/ArticleLayout.astro';
 import LibraryCard from './LibraryCard.astro';
+import WatchLibrary from './WatchLibrary.astro';
 
 type Category = 'movies' | 'series' | 'music';
 interface Props { lang: 'zh' | 'en'; category: Category; }
@@ -136,9 +137,7 @@ const songEntries = category === 'music'
 					</div>
 				</>
 			) : (
-				<div class="category-grid">
-					{entries.map((entry, index) => <div class="category-item" data-reveal style={`--reveal-delay: ${(index % 4) * 60}ms;`}><LibraryCard entry={entry} lang={lang} /></div>)}
-				</div>
+				<WatchLibrary entries={entries} lang={lang} />
 			)}
 		</section>
 	</main>

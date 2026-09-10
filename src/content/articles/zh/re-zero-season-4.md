@@ -1,25 +1,13 @@
 ---
 title: Re:從零開始的異世界生活 第四季
-originalTitle: Re:ゼロから始める異世界生活 4th season
 description: 第 81 話〈一途な星〉讓我理解夏烏拉對師父的依戀，也用最後的死亡之書留下巨大懸念。
 lang: zh
-reviewSlug: re-zero-season-4
 translationKey: re-zero-season-4
-format: series
-season: 4
-year: 2026
-status: watching
-latestEpisode:
-  number: 81
-  title: 一途な星
-  rating: 10
 publishedAt: 2026-09-02
 updatedAt: 2026-09-03
 draft: false
-sample: false
-spoiler: true
-officialUrl: https://re-zero-anime.jp/tv/
-externalReviews: []
+articleSlug: re-zero-season-4
+category: 影評
 ---
 
 ## 無劇透短評
@@ -47,3 +35,4 @@ externalReviews: []
 ## 暫時結語
 
 第四季還沒播完，所以我暫時不給整季評分。但只看第 81 話，夏烏拉的情感和結尾的懸念都正中我，這一集對我來說就是滿分。
+
