@@ -15,4 +15,5 @@ coverTheme: ember
 coverImage: https://m.media-amazon.com/images/M/MV5BODdiNWI5ZjgtY2RhZi00ODlmLTkyNDEtMzIyMTEyZDE2ZjNjXkEyXkFqcGc@._V1_QL75_UX600_.jpg
 externalUrl: https://www.imdb.com/title/tt6468322/
 demo: false
+watchedSeasons: "看過：第 1–5 季"
 ---

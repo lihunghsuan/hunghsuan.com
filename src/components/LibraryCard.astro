@@ -58,6 +58,7 @@ const cardLabel = cardHref
 			<span>{data.duration ?? data.releaseYear}</span>
 		</div>
 		<h3>{data.title}</h3>
+		{data.watchedSeasons && <p>{data.watchedSeasons}</p>}
 		{data.secondaryTitle && <p class="secondary-title">{data.secondaryTitle}</p>}
 		<p>{data.creator}</p>
 		{data.album && <p class="album-title">{data.album}</p>}

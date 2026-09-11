@@ -9,7 +9,7 @@ const { entries, lang } = Astro.props;
    <a class="poster" href={data.externalUrl} target="_blank" rel="noreferrer" aria-label={data.title}>
     {data.coverImage ? <img src={data.coverImage} alt={data.title} loading="lazy" decoding="async" referrerpolicy="no-referrer" /> : <span>{data.title}</span>}
    </a>
-   <div class="watch-copy"><h2><a href={data.externalUrl} target="_blank" rel="noreferrer">{data.title}</a></h2><p class="description">{data.description}</p><p>{data.releaseYear} · {data.creator}</p></div>
+   <div class="watch-copy"><h2><a href={data.externalUrl} target="_blank" rel="noreferrer">{data.title}</a></h2>{data.watchedSeasons && <p>{data.watchedSeasons}</p>}<p class="description">{data.description}</p><p>{data.releaseYear} · {data.creator}</p></div>
   </article>)}
  </div>
 </div>

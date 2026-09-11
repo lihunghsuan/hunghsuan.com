@@ -73,6 +73,7 @@ const library = defineCollection({
 		addedAt: z.coerce.date(),
 		status: z.enum(['watching', 'watched', 'listened', 'favorite', 'saved', 'demo']),
 		progress: z.string().optional(),
+		watchedSeasons: z.string().optional(),
 		rating: z.number().min(0).max(10).optional(),
 		album: z.string().optional(),
 		duration: z.string().optional(),
