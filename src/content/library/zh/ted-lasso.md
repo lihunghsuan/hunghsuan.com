@@ -1,5 +1,6 @@
 ---
-title: Ted Lasso
+title: "泰德拉索：錯棚教練趣事多"
+secondaryTitle: "Ted Lasso"
 creator: Jason Sudeikis / Bill Lawrence / Brendan Hunt / Joe Kelly
 description: 一位美式足球教練遠赴英國，接手一支職業足球隊。
 lang: zh

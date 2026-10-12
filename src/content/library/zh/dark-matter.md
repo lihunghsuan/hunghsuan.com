@@ -1,5 +1,6 @@
 ---
-title: Dark Matter
+title: "人生複本"
+secondaryTitle: "Dark Matter"
 creator: Blake Crouch
 description: 一名物理學家被帶往另一個版本的人生，試圖找到回家的路。
 lang: zh

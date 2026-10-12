@@ -168,6 +168,7 @@ const featuredVideos = [
 		<meta name="twitter:title" content={siteTitle} />
 		<meta name="twitter:description" content={siteDescription} />
 		<meta name="twitter:image" content={socialImageURL} />
+		<meta name="twitter:image:alt" content={t('Hunghsuan 個人網站', 'Hunghsuan personal website')} />
 
 		<title>{siteTitle}</title>
 		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
@@ -365,6 +366,16 @@ const featuredVideos = [
 									'I work in the games industry, play PUBG MOBILE and Delta Force, and make gaming videos and guides. This site is where I keep the useful things I’ve learned along the way.',
 								)}
 							</p>
+							<details class="name-story">
+								<summary>{t('為什麼叫「帶哥」？', 'Why “Dai Ge”?')}</summary>
+								<p>{t('2019 年，我加入 PUBG MOBILE 社群並擔任管理員。社群裡有個虛構角色叫「帶妹」，我便取名「帶哥」，和她組個 CP。當時開玩笑取的名字，一直用到了今天。', 'In 2019, I joined a PUBG MOBILE community and became an admin. The community owner was a fictional persona called Dai Mei. As a joke, I called myself Dai Ge to pair our names up. The nickname stuck.')}</p>
+								<p>
+								{t(
+									'當時我很擅長 PUBG MOBILE，也常在社群解答玩家的問題，整理並反饋大家遇到的狀況。帶妹是一個虛構的社群角色，而帶哥，是我從那段經歷中帶到今天的名字。',
+									'I was good at PUBG MOBILE, and I spent a lot of time answering players’ questions and collecting their feedback to pass on. Dai Mei was a fictional community persona. Dai Ge is the name I’ve kept ever since.',
+								)}
+								</p>
+							</details>
 							<ul class="interest-list" aria-label={t('興趣與專長', 'Interests')}>
 								<li>PUBG MOBILE</li>
 								<li>DELTA FORCE</li>
@@ -574,6 +585,10 @@ const featuredVideos = [
 					preference === 'auto' ? (systemTheme.matches ? 'dark' : 'light') : preference;
 				root.dataset.themePreference = preference;
 				root.dataset.theme = theme;
+				document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+					meta.removeAttribute('media');
+					meta.setAttribute('content', theme === 'dark' ? '#101713' : '#f1eee5');
+				});
 
 				themeButtons.forEach((button) => {
 					button.setAttribute(

@@ -1,6 +1,5 @@
 ---
-title: Arcane Season 2
-secondaryTitle: 奧術 第二季
+title: "Arcane Season 2"
 creator: Fortiche
 description: A sample animated series used to preview the Library layout.
 lang: en

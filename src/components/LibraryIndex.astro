@@ -54,6 +54,9 @@ const description = t(
 		{
 			sections.map((section) => {
 				const allSectionEntries = entries.filter((entry) => entry.data.kind === section.key);
+				if (section.key === 'music') {
+					allSectionEntries.sort((a, b) => b.data.addedAt.valueOf() - a.data.addedAt.valueOf() || (a.data.listOrder ?? Number.MAX_SAFE_INTEGER) - (b.data.listOrder ?? Number.MAX_SAFE_INTEGER));
+				}
 				const formalEntries = allSectionEntries.filter((entry) => !entry.data.demo);
 				const sectionEntries = formalEntries.length > 0 ? formalEntries : allSectionEntries;
 				return (

@@ -1,7 +1,8 @@
 ---
-title: "無職轉生"
+title: "無職轉生～到了異世界就拿出真本事～"
+secondaryTitle: "無職転生 ～異世界行ったら本気だす～"
 creator: Studio Bind
-description: "Mushoku Tensei: Jobless Reincarnation"
+description: "一名男子轉生到魔法世界，成為魯迪烏斯，重新開始自己的人生。"
 lang: zh
 librarySlug: mushoku-tensei
 translationKey: mushoku-tensei

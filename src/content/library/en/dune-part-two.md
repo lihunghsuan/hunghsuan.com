@@ -1,6 +1,5 @@
 ---
 title: "Dune: Part Two"
-secondaryTitle: 沙丘：第二部
 creator: Denis Villeneuve
 description: A sample film used to preview the Library layout.
 lang: en

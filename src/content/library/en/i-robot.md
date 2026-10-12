@@ -1,6 +1,5 @@
 ---
 title: "I, Robot"
-secondaryTitle: "我，機器人"
 creator: Alex Proyas
 description: "I, Robot (2004)."
 lang: en

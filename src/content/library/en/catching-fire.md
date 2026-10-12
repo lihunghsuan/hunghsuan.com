@@ -1,6 +1,5 @@
 ---
 title: "The Hunger Games: Catching Fire"
-secondaryTitle: 飢餓遊戲：星火燎原
 creator: Francis Lawrence
 description: A sample film used to preview the Library layout.
 lang: en

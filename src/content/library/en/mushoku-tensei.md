@@ -1,7 +1,8 @@
 ---
 title: "Mushoku Tensei: Jobless Reincarnation"
+secondaryTitle: "無職転生 ～異世界行ったら本気だす～"
 creator: Studio Bind
-description: "無職轉生"
+description: "Reborn as Rudeus in a world of magic, a man gets a second chance at life."
 lang: en
 librarySlug: mushoku-tensei
 translationKey: mushoku-tensei

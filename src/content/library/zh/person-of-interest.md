@@ -1,7 +1,8 @@
 ---
 title: "疑犯追蹤"
+secondaryTitle: "Person of Interest"
 creator: Jonathan Nolan
-description: "Person of Interest"
+description: "一名前 CIA 探員與隱居的程式設計師，利用人工智慧系統阻止犯罪。"
 lang: zh
 librarySlug: person-of-interest
 translationKey: person-of-interest

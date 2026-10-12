@@ -528,6 +528,30 @@ img {
 	line-height: 1.75;
 }
 
+.about-copy > .name-story {
+	margin-top: 24px;
+	color: var(--muted);
+	font-size: 0.9rem;
+	line-height: 1.8;
+}
+
+.name-story summary {
+	width: fit-content;
+	padding: 8px 0;
+	color: var(--ink);
+	font-weight: 650;
+	cursor: pointer;
+}
+
+.name-story summary:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 4px;
+}
+
+.name-story p {
+	margin: 12px 0 0;
+}
+
 .interest-list {
 	display: flex;
 	flex-wrap: wrap;
@@ -1033,7 +1057,8 @@ img {
 	}
 
 	.theme-control button {
-		min-width: 30px;
+		min-width: 44px;
+		min-height: 44px;
 		padding: 0 6px;
 	}
 }

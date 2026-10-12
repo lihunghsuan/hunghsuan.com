@@ -1,5 +1,5 @@
 ---
-title: 沙丘：第二部
+title: "沙丘：第二部"
 secondaryTitle: "Dune: Part Two"
 creator: Denis Villeneuve
 description: 用於預覽 Library 版面的電影示例。

@@ -1,7 +1,8 @@
 ---
 title: "Re:從零開始的異世界生活"
+secondaryTitle: "Re:ゼロから始める異世界生活"
 creator: WHITE FOX
-description: "Re:Zero − Starting Life in Another World"
+description: "菜月昴來到異世界，發現自己死亡後會回到過去。"
 lang: zh
 librarySlug: re-zero
 translationKey: re-zero

@@ -74,6 +74,7 @@ const structuredData =
 		<link rel="icon" type="image/png" href="/favicon.png" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="canonical" href={canonicalURL} />
+		{(lang === 'en' || translationURL) && <link rel="alternate" hreflang="x-default" href={lang === 'en' ? canonicalURL : translationURL} />}
 		{
 			translationURL && (
 				<>
@@ -232,6 +233,10 @@ const structuredData =
 					preference === 'auto' ? (systemTheme.matches ? 'dark' : 'light') : preference;
 				root.dataset.themePreference = preference;
 				root.dataset.theme = theme;
+				document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+					meta.removeAttribute('media');
+					meta.setAttribute('content', theme === 'dark' ? '#101713' : '#f1eee5');
+				});
 
 				themeButtons.forEach((button) => {
 					button.setAttribute(

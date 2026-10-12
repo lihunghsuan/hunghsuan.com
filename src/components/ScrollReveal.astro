@@ -8,9 +8,17 @@
 
 <script>
 	const revealItems = document.querySelectorAll<HTMLElement>('[data-reveal]');
-
-	if (!('IntersectionObserver' in window)) {
+	const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+	const showAll = () => {
+		document.documentElement.classList.remove('reveal-ready');
 		revealItems.forEach((item) => item.classList.add('is-visible'));
+	};
+	reducedMotion.addEventListener('change', (event) => {
+		if (event.matches) showAll();
+	});
+
+	if (reducedMotion.matches || !('IntersectionObserver' in window)) {
+		showAll();
 	} else {
 		const revealObserver = new IntersectionObserver(
 			(entries) => {

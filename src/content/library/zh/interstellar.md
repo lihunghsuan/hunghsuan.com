@@ -1,6 +1,6 @@
 ---
-title: 星際效應
-secondaryTitle: Interstellar
+title: "星際效應"
+secondaryTitle: "Interstellar"
 creator: Christopher Nolan
 description: 用於預覽 Library 版面的電影示例。
 lang: zh

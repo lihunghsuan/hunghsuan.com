@@ -109,7 +109,7 @@ const songEntries = category === 'music'
 							{albumGroups.map(({ album, items, cover }) => (
 								<a class="album-card" href={cover.data.externalUrl} target={cover.data.externalUrl ? '_blank' : undefined} rel={cover.data.externalUrl ? 'noreferrer' : undefined}>
 									<div class="album-artwork">
-										{cover.data.coverImage ? <img src={cover.data.coverImage} alt="" loading="lazy" decoding="async" /> : <span>{album.slice(0, 1).toUpperCase()}</span>}
+										{cover.data.coverImage ? <img src={cover.data.coverImage} alt="" width="600" height="600" loading="lazy" decoding="async" referrerpolicy="no-referrer" /> : <span>{album.slice(0, 1).toUpperCase()}</span>}
 									</div>
 									<h2>{album}</h2>
 									<p>{items[0].data.creator}</p>

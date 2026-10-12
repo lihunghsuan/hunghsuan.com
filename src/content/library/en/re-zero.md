@@ -1,7 +1,8 @@
 ---
 title: "Re:Zero − Starting Life in Another World"
+secondaryTitle: "Re:ゼロから始める異世界生活"
 creator: WHITE FOX
-description: "Re:從零開始的異世界生活"
+description: "Subaru arrives in another world and discovers that death sends him back in time."
 lang: en
 librarySlug: re-zero
 translationKey: re-zero

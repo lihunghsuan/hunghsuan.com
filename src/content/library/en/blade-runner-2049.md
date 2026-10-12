@@ -1,6 +1,5 @@
 ---
-title: Blade Runner 2049
-secondaryTitle: 銀翼殺手 2049
+title: "Blade Runner 2049"
 creator: Denis Villeneuve
 description: A sample film used to preview the Library layout.
 lang: en

@@ -1,6 +1,6 @@
 ---
-title: 葬送的芙莉蓮
-secondaryTitle: "Frieren: Beyond Journey's End"
+title: "葬送的芙莉蓮"
+secondaryTitle: "葬送のフリーレン"
 creator: Madhouse
 description: 用於預覽 Library 版面的動畫示例。
 lang: zh

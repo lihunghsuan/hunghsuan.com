@@ -1,6 +1,6 @@
 ---
-title: F1 電影
-secondaryTitle: F1 The Movie
+title: "F1 電影"
+secondaryTitle: "F1 The Movie"
 creator: Joseph Kosinski
 description: Apple Original Films 出品的賽車電影，由 Joseph Kosinski 執導。
 lang: zh

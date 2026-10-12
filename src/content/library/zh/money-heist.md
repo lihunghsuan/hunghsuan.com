@@ -1,6 +1,6 @@
 ---
-title: 紙鈔屋
-secondaryTitle: Money Heist / La casa de papel
+title: "紙鈔屋"
+secondaryTitle: "La casa de papel"
 creator: Álex Pina
 description: 西班牙犯罪驚悚影集，圍繞教授策劃的連環搶劫展開。
 lang: zh

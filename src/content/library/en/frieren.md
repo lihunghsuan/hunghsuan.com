@@ -1,6 +1,6 @@
 ---
 title: "Frieren: Beyond Journey's End"
-secondaryTitle: 葬送的芙莉蓮
+secondaryTitle: "葬送のフリーレン"
 creator: Madhouse
 description: A sample anime used to preview the Library layout.
 lang: en

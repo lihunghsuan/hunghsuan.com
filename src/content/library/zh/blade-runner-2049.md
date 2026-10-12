@@ -1,6 +1,6 @@
 ---
-title: 銀翼殺手 2049
-secondaryTitle: Blade Runner 2049
+title: "銀翼殺手 2049"
+secondaryTitle: "Blade Runner 2049"
 creator: Denis Villeneuve
 description: 用於預覽 Library 版面的電影示例。
 lang: zh

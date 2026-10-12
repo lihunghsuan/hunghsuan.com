@@ -1,7 +1,7 @@
 ---
 title: "Person of Interest"
 creator: Jonathan Nolan
-description: "疑犯追蹤"
+description: "A former CIA operative and a reclusive programmer use an AI system to prevent crimes."
 lang: en
 librarySlug: person-of-interest
 translationKey: person-of-interest

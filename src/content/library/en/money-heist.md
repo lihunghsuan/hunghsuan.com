@@ -1,6 +1,6 @@
 ---
-title: Money Heist
-secondaryTitle: La casa de papel / 紙鈔屋
+title: "Money Heist"
+secondaryTitle: "La casa de papel"
 creator: Álex Pina
 description: A Spanish crime thriller about a series of ambitious heists orchestrated by the Professor.
 lang: en

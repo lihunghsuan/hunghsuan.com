@@ -1,6 +1,5 @@
 ---
-title: F1 The Movie
-secondaryTitle: F1 電影
+title: "F1 The Movie"
 creator: Joseph Kosinski
 description: An Apple Original Films racing drama directed by Joseph Kosinski.
 lang: en

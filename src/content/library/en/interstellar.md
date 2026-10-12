@@ -1,6 +1,5 @@
 ---
-title: Interstellar
-secondaryTitle: 星際效應
+title: "Interstellar"
 creator: Christopher Nolan
 description: A sample film used to preview the Library layout.
 lang: en

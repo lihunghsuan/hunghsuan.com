@@ -1,5 +1,6 @@
 ---
-title: Silo
+title: "末日地堡"
+secondaryTitle: "Silo"
 creator: Graham Yost
 description: 地下堡壘中的居民遵循嚴格規則，一名工程師開始追查外界的真相。
 lang: zh
