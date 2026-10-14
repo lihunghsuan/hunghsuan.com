@@ -4,12 +4,13 @@ import ArticleLayout from '../layouts/ArticleLayout.astro';
 import LibraryCard from './LibraryCard.astro';
 import WatchLibrary from './WatchLibrary.astro';
 
-type Category = 'movies' | 'series' | 'music';
+type Category = 'movies' | 'series' | 'music' | 'games';
 interface Props { lang: 'zh' | 'en'; category: Category; }
 const { lang, category } = Astro.props;
 const isZh = lang === 'zh';
 const t = (zh: string, en: string) => (isZh ? zh : en);
 const categories = {
+	games: { title: t('遊戲', 'Game'), description: t('我玩過的遊戲，依最近添加排序。', 'Games I have played, sorted by most recently added.') },
 	music: { title: t('音樂', 'Music'), description: t('聽過並收藏的專輯、EP 與單曲，依最近添加排序。', 'Albums, EPs, and singles I have listened to and saved, sorted by most recently added.') },
 	movies: { title: t('電影', 'Movies'), description: t('看過與想記住的電影，依最近添加排序。', 'Films I have watched and want to remember, sorted by most recently added.') },
 	series: { title: t('電視劇／動畫', 'Series / Anime'), description: t('追過的劇集與動畫，依最近添加排序。', 'Series and anime I have followed, sorted by most recently added.') },
@@ -136,6 +137,8 @@ const songEntries = category === 'music'
 						</div>
 					</div>
 				</>
+			) : category === 'games' ? (
+				<div class="category-grid">{entries.map((entry) => <div class="category-item"><LibraryCard entry={entry} lang={lang} /></div>)}</div>
 			) : (
 				<WatchLibrary entries={entries} lang={lang} />
 			)}

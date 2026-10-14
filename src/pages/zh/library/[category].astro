@@ -2,7 +2,7 @@
 import LibraryCategory from '../../../components/LibraryCategory.astro';
 
 export function getStaticPaths() {
-	return ['movies', 'series', 'music'].map((category) => ({ params: { category }, props: { category } }));
+	return ['movies', 'series', 'music', 'games'].map((category) => ({ params: { category }, props: { category } }));
 }
 const { category } = Astro.props;
 ---
